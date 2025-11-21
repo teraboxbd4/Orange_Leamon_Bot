@@ -179,14 +179,17 @@
     <script>
     document.addEventListener('DOMContentLoaded', () => {
         const tg = window.Telegram.WebApp;
+        
+        // আপডেটেড কনফিগ
         const firebaseConfig = {
-  apiKey: "AIzaSyDJPs6pXv2k_wTCNWHqsr5exFkvOMeIX40",
-  authDomain: "orange-leamon-bot.firebaseapp.com",
-  projectId: "orange-leamon-bot",
-  storageBucket: "orange-leamon-bot.firebasestorage.app",
-  messagingSenderId: "440970951072",
-  appId: "1:440970951072:web:6cf46f7720d260047c4cc5"
-};
+          apiKey: "AIzaSyDJPs6pXv2k_wTCNWHqsr5exFkvOMeIX40",
+          authDomain: "orange-leamon-bot.firebaseapp.com",
+          databaseURL: "https://orange-leamon-bot-default-rtdb.firebaseio.com",
+          projectId: "orange-leamon-bot",
+          storageBucket: "orange-leamon-bot.firebasestorage.app",
+          messagingSenderId: "440970951072",
+          appId: "1:440970951072:web:6cf46f7720d260047c4cc5"
+        };
         
         let appConfig = {}; let userState = {}; let tgUser = {}; let earningWalletBalance = 0;
         let leaderboardData = { referral: [], earning: [] };
@@ -215,7 +218,12 @@
             tg.ready(); tg.expand();
             document.body.className = `${tg.colorScheme}-theme`;
             tgUser = tg.initDataUnsafe.user;
-            if (!tgUser || !tgUser.id) { tg.showAlert("User data not found.", () => tg.close()); return; }
+            
+            // Testing fix: If no TG user (browser test), create dummy user
+            if (!tgUser || !tgUser.id) { 
+                console.warn("User data not found. Using Test User.");
+                tgUser = { id: 123456, first_name: "Test", last_name: "User", username: "testuser", photo_url: "" };
+            }
 
             try {
                 updateProgress(10); firebase.initializeApp(firebaseConfig); const db = firebase.database();
@@ -225,7 +233,7 @@
                 appConfig = configSnapshot.val() || {};
                 updateProgress(40);
 
-                await loadUserData(db); // This now depends on appConfig, so it runs after.
+                await loadUserData(db); 
                 updateProgress(60);
 
                 const referralBoardPromise = db.ref('users').orderByChild('referrals').limitToLast(10).once('value');
@@ -240,7 +248,7 @@
                 leaderboardData.referral.reverse(); leaderboardData.earning.reverse();
                 updateProgress(90);
 
-                loadAdSdk(appConfig.adZoneId);
+                if(appConfig.adZoneId) loadAdSdk(appConfig.adZoneId);
                 earningWalletBalance = parseFloat(localStorage.getItem(`earningWallet_${tgUser.id}`) || '0');
                 
                 renderUI(); setupNavigation(); setupEventListeners();
