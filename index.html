@@ -116,7 +116,7 @@
         .leaderboard-item img { width: 40px; height: 40px; border-radius: 50%; margin-right: 10px; object-fit: cover; }
         .leaderboard-name { font-weight: 600; flex-grow: 1; } .leaderboard-score { font-weight: 600; color: var(--primary-color); }
 
-        /* --- UPDATED: Daily Goal Card Styles (Fix for Dark Mode) --- */
+        /* --- Daily Goal Card Styles --- */
         .daily-goal-card {
             padding: 20px;
             border-radius: 15px;
@@ -124,16 +124,14 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             margin-bottom: 20px;
         }
-        /* Light Mode Specifics */
         .light-theme .daily-goal-card { 
             background: linear-gradient(135deg, #FFFFFF, #F8F9F9);
             border-color: var(--border-light); 
         }
-        /* Dark Mode Specifics */
         .dark-theme .daily-goal-card { 
             background: linear-gradient(135deg, var(--surface-dark), #1A252F);
             border-color: var(--border-dark);
-            color: white; /* Ensure text is white */
+            color: white;
         }
 
         .goal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
@@ -724,12 +722,15 @@
         const handleWithdraw = async (e) => {
             if(e.target.id !== 'withdraw-form') return;
             e.preventDefault();
+
             const minRefsRequired = appConfig.minimumWithdrawReferrals || 0;
             const userReferrals = userState.referrals || 0;
+            
             if (minRefsRequired > 0 && userReferrals < minRefsRequired) {
-                tg.showAlert(`Need ${minRefsRequired} referrals to withdraw. You have ${userReferrals}.`);
+                tg.showAlert(`You need ${minRefsRequired} referrals. You have only ${userReferrals}.`);
                 return;
             }
+
             const methodEl = document.getElementById('withdraw-method');
             const accountNumber = document.getElementById('account-number').value;
             const amount = parseFloat(document.getElementById('amount').value);
@@ -740,26 +741,52 @@
             if (amount < selectedMethod.min) { tg.showAlert(`Min withdraw ${selectedMethod.min} TK.`); return; }
             if (amount > userState.balance) { tg.showAlert("Insufficient balance."); return; }
             
-            const btn = document.getElementById('withdraw-submit-btn'); btn.disabled = true; btn.textContent = 'Submitting...';
+            const btn = document.getElementById('withdraw-submit-btn'); 
+            btn.disabled = true; 
+            btn.textContent = 'Submitting...';
+            
             const db = firebase.database();
             try {
                 const userRef = db.ref(`users/${tgUser.id}`);
+                
+                // ১. UI ব্যালেন্স আপডেট
                 userState.balance -= amount;
                 renderUI(); 
+                
+                // ২. ডেটাবেস ব্যালেন্স আপডেট
                 await userRef.child('balance').set(firebase.database.ServerValue.increment(-amount));
+                
                 const reqId = db.ref('withdrawals/pending').push().key;
-                const newRequest = { id: reqId, userId: tgUser.id, userName: `${userState.firstName} ${userState.lastName}`, method: selectedMethod.name, account: accountNumber, amount: amount, status: 'pending', timestamp: firebase.database.ServerValue.TIMESTAMP };
+                const newRequest = { 
+                    id: reqId, 
+                    userId: tgUser.id, 
+                    userName: `${userState.firstName} ${userState.lastName}`, 
+                    method: selectedMethod.name, 
+                    account: accountNumber, 
+                    amount: amount, 
+                    status: 'pending', 
+                    timestamp: firebase.database.ServerValue.TIMESTAMP 
+                };
+                
                 await db.ref(`withdrawals/pending/${reqId}`).set(newRequest);
                 userTransactions.unshift(newRequest);
                 renderWithdrawalHistory(); 
+                
                 tg.HapticFeedback.notificationOccurred('success');
                 tg.showAlert("Request submitted!");
                 document.getElementById('withdraw-form').reset();
+                
             } catch (error) {
+                console.error("WITHDRAW ERROR:", error);
+                
+                // রিভার্ট করা
                 userState.balance += amount;
                 tg.HapticFeedback.notificationOccurred('error'); 
-                tg.showAlert("Failed. Balance restored.");
-            } finally { renderUI(); btn.disabled = false; btn.textContent = 'Submit Request'; }
+                tg.showAlert("Failed: " + error.message); 
+            } finally { 
+                renderUI(); 
+                // বাটন রিসেট না করে UI রি-রেন্ডার করাটাই শ্রেয়
+            }
         };
 
         const copyReferralLink = () => {
@@ -805,13 +832,50 @@
             container.innerHTML = `<div class="task-container" style="flex-direction: column; align-items: stretch;"><h3>Refer & Earn More!</h3><p>Invite friends and earn ${appConfig.referralBonus || 0} TK per referral.</p><input type="text" id="referral-link" value="${refLink}" readonly style="padding: 10px; text-align: center; border-radius: 8px; border: 1px dashed var(--primary-color); margin: 10px 0;"><button id="copy-ref-link-btn" class="action-btn">Copy Link</button></div>`;
         };
 
+        // --- UPDATED: Render Withdraw Section with Referral Status ---
         const renderWithdrawSection = () => {
             const container = document.getElementById('withdraw-section'); let optionsHtml = '';
-            if (appConfig.withdrawMethods) { appConfig.withdrawMethods.forEach(method => { optionsHtml += `<option value="${method.name}">${method.name} (Min: ${method.min} TK)</option>`; }); }
+            if (appConfig.withdrawMethods) { 
+                appConfig.withdrawMethods.forEach(method => { 
+                    optionsHtml += `<option value="${method.name}">${method.name} (Min: ${method.min} TK)</option>`; 
+                }); 
+            }
+            
             const minRefs = appConfig.minimumWithdrawReferrals || 0;
+            const userRefs = userState.referrals || 0;
+            const isEligible = userRefs >= minRefs;
+            
             let referralNotice = '';
-            if (minRefs > 0) { referralNotice = `<p style="font-size: 0.85rem; text-align: center; margin-bottom: 15px; opacity: 0.8;"><b>Note:</b> You need at least <b>${minRefs} referrals</b> to be eligible for withdrawal.</p>`; }
-            container.innerHTML = `<form id="withdraw-form" class="task-container" style="flex-direction: column; align-items: stretch;"><h3>Request Withdraw</h3>${referralNotice}<div class="form-group" style="width:100%"><label for="withdraw-method">Method:</label><select id="withdraw-method" required style="width: 100%; padding: 10px; border-radius: 8px;">${optionsHtml}</select></div><div class="form-group" style="width:100%"><label for="account-number">Account Number/ID:</label><input type="text" id="account-number" required style="width: 100%; padding: 10px; border-radius: 8px;"></div><div class="form-group" style="width:100%"><label for="amount">Amount:</label><input type="number" step="any" id="amount" required style="width: 100%; padding: 10px; border-radius: 8px;"></div><button type="submit" id="withdraw-submit-btn" class="action-btn">Submit Request</button></form>`;
+            if (minRefs > 0) {
+                const color = isEligible ? 'var(--success)' : 'var(--danger)';
+                const icon = isEligible ? '<i class="fas fa-check-circle"></i>' : '<i class="fas fa-times-circle"></i>';
+                referralNotice = `
+                    <div style="background: rgba(0,0,0,0.05); padding: 10px; border-radius: 8px; margin-bottom: 15px; border-left: 4px solid ${color};">
+                        <p style="font-size: 0.9rem; font-weight: 600; color: ${color}; margin-bottom: 5px;">
+                            ${icon} Referral Status: ${userRefs} / ${minRefs}
+                        </p>
+                        <p style="font-size: 0.8rem; opacity: 0.8;">
+                            ${isEligible ? 'You are eligible to withdraw!' : `You need ${minRefs - userRefs} more referrals to withdraw.`}
+                        </p>
+                    </div>
+                `;
+            }
+
+            // Disable button if not eligible
+            const disabledAttr = (minRefs > 0 && !isEligible) ? 'disabled' : '';
+            const btnStyle = (minRefs > 0 && !isEligible) ? 'background: #ccc; cursor: not-allowed;' : '';
+            const btnText = (minRefs > 0 && !isEligible) ? `Need ${minRefs} Referrals` : 'Submit Request';
+
+            container.innerHTML = `
+                <form id="withdraw-form" class="task-container" style="flex-direction: column; align-items: stretch;">
+                    <h3>Request Withdraw</h3>
+                    ${referralNotice}
+                    <div class="form-group" style="width:100%"><label for="withdraw-method">Method:</label><select id="withdraw-method" required style="width: 100%; padding: 10px; border-radius: 8px;">${optionsHtml}</select></div>
+                    <div class="form-group" style="width:100%"><label for="account-number">Account Number/ID:</label><input type="text" id="account-number" required style="width: 100%; padding: 10px; border-radius: 8px;"></div>
+                    <div class="form-group" style="width:100%"><label for="amount">Amount:</label><input type="number" step="any" id="amount" required style="width: 100%; padding: 10px; border-radius: 8px;"></div>
+                    <button type="submit" id="withdraw-submit-btn" class="action-btn" ${disabledAttr} style="${btnStyle}">${btnText}</button>
+                </form>
+            `;
         };
 
         const renderDynamicLinks = () => {
