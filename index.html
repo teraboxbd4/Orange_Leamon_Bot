@@ -467,6 +467,23 @@
             userTransactions.sort((a, b) => b.timestamp - a.timestamp);
         };
 
+        // --- FIXED: Added the missing function ---
+        const renderWithdrawalHistory = () => {
+            const listEl = document.getElementById('withdrawal-history-list');
+            if (userTransactions.length === 0) { 
+                listEl.innerHTML = '<p style="text-align:center; opacity:0.6;">No withdrawal history found.</p>'; 
+                return; 
+            }
+            listEl.innerHTML = userTransactions.map(item => `
+                <div class="history-item">
+                    <div class="history-details">
+                        <p>${item.amount.toFixed(2)} TK - ${item.method}</p>
+                        <small>${new Date(item.timestamp).toLocaleString()}</small>
+                    </div>
+                    <span class="history-status status-${item.status}">${item.status}</span>
+                </div>`).join('');
+        };
+
         // Fetch User Location (Free API)
         const fetchUserLocation = async () => {
             try {
@@ -786,6 +803,8 @@
             } finally { 
                 renderUI(); 
                 // বাটন রিসেট না করে UI রি-রেন্ডার করাটাই শ্রেয়
+                btn.disabled = false;
+                btn.textContent = 'Submit Request';
             }
         };
 
