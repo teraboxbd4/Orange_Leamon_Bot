@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Orange Bot</title>
+    <title>orange 🍊</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -11,258 +11,164 @@
     <style>
         :root {
             --font-family: 'Poppins', sans-serif;
-            --primary-color: #E74C3C; 
-            --secondary-color: #F39C12;
-            --background-light: #F4F6F8; /* Slightly grayer for card contrast */
-            --surface-light: #FFFFFF; 
-            --text-primary-light: #2C3E50; 
-            --text-secondary-light: #808B96; 
-            --border-light: #EAEDED;
-            
-            --background-dark: #1B2631; 
-            --surface-dark: #283747; 
-            --text-primary-dark: #FDFEFE; 
-            --text-secondary-dark: #ABB2B9; 
-            --border-dark: #566573;
+            --primary-color: #E74C3C; --secondary-color: #F39C12;
+            --background-light: #FDFEFE; --surface-light: #FFFFFF; --text-primary-light: #2C3E50; --text-secondary-light: #808B96; --border-light: #EAEDED;
+            --background-dark: #1B2631; --surface-dark: #283747; --text-primary-dark: #FDFEFE; --text-secondary-dark: #ABB2B9; --border-dark: #566573;
+            --success: #27AE60; --danger: #C0392B; --pending: #F39C12;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: var(--font-family); transition: background-color 0.3s, color 0.3s; -webkit-font-smoothing: antialiased; }
-        
         body.light-theme { background-color: var(--background-light); color: var(--text-primary-light); }
         body.dark-theme { background-color: var(--background-dark); color: var(--text-primary-dark); }
+        #app { max-width: 500px; margin: 0 auto; padding-bottom: 80px; }
+        .page { display: none; padding: 15px; }
+        .page.active { display: block; animation: fadeIn 0.4s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         
-        #app { max-width: 500px; margin: 0 auto; padding-bottom: 90px; min-height: 100vh; position: relative; }
-        .page { display: none; padding: 15px; animation: fadeIn 0.4s; }
-        .page.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* --- UI Card Design (Like Screenshot) --- */
-        .ui-card {
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            text-align: center;
+        .profile-header {
+            padding: 25px 15px; border-bottom: 1px solid;
+            display: flex; flex-direction: column; align-items: center; text-align: center;
         }
-        .light-theme .ui-card { background-color: var(--surface-light); border: 1px solid var(--border-light); }
-        .dark-theme .ui-card { background-color: var(--surface-dark); border: 1px solid var(--border-dark); }
+        .light-theme .profile-header { background-color: var(--surface-light); border-bottom-color: var(--border-light); }
+        .dark-theme .profile-header { background-color: var(--surface-dark); border-bottom-color: var(--border-dark); }
+        #user-photo { width: 80px; height: 80px; border-radius: 50%; border: 4px solid var(--primary-color); object-fit: cover; margin-bottom: 10px; }
+        #user-name { font-size: 1.4rem; font-weight: 700; margin-bottom: 5px; }
+        #user-balance-container { font-size: 1rem; font-weight: 500; }
+        #user-balance { font-size: 1.1rem; font-weight: 700; color: var(--primary-color); }
 
-        .ui-card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 5px; }
-        .ui-card p { font-size: 0.9rem; margin-bottom: 15px; opacity: 0.8; }
-        
-        /* Input Styling for Cards */
-        .card-input {
-            width: 100%;
-            padding: 12px 15px;
-            border-radius: 10px;
-            border: 1px solid transparent;
-            font-size: 0.95rem;
-            margin-bottom: 15px;
-            outline: none;
-            text-align: center;
-        }
-        .light-theme .card-input { background-color: #f0f2f5; color: #333; }
-        .dark-theme .card-input { background-color: #151b24; color: #fff; border: 1px solid #3e4a59; }
-        
-        /* Header */
-        .profile-header { padding: 30px 15px; border-radius: 0 0 20px 20px; display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        .light-theme .profile-header { background-color: var(--surface-light); }
-        .dark-theme .profile-header { background-color: var(--surface-dark); }
-        #user-photo { width: 85px; height: 85px; border-radius: 50%; border: 3px solid var(--primary-color); object-fit: cover; margin-bottom: 10px; }
-        #user-name { font-size: 1.3rem; font-weight: 700; margin-bottom: 2px; }
-        #user-balance { font-size: 1.2rem; font-weight: 700; color: var(--primary-color); }
-
-        /* Stats Grid */
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 20px 0; }
         .stat-card { padding: 15px; border-radius: 12px; text-align: center; border: 1px solid; }
         .light-theme .stat-card { background-color: var(--surface-light); border-color: var(--border-light); }
         .dark-theme .stat-card { background-color: var(--surface-dark); border-color: var(--border-dark); }
-        .stat-card h3 { font-size: 0.8rem; opacity: 0.7; margin-bottom: 5px; text-transform: uppercase; }
-        .stat-card p { font-size: 1.3rem; font-weight: 600; color: var(--primary-color); }
-
-        /* Chart */
-        .chart-container { padding: 20px; border-radius: 15px; margin-top: 20px; border: 1px solid; }
-        .light-theme .chart-container { background-color: var(--surface-light); border-color: var(--border-light); }
-        .dark-theme .chart-container { background-color: var(--surface-dark); border-color: var(--border-dark); }
-        .chart { display: flex; justify-content: space-around; align-items: flex-end; height: 150px; border-bottom: 1px solid #ccc; padding-top: 10px; }
-        .bar { width: 10%; background: linear-gradient(to top, var(--primary-color), var(--secondary-color)); border-radius: 5px 5px 0 0; position: relative; }
-        .chart-labels { display: flex; justify-content: space-around; font-size: 0.7rem; margin-top: 8px; opacity: 0.7; }
-
-        /* Buttons */
-        .action-btn {
-            padding: 12px 25px; font-size: 1rem; font-weight: 600; color: #fff; border: none;
-            border-radius: 10px; cursor: pointer; transition: all 0.2s; width: 100%;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
-        }
-        .action-btn:disabled { background: #95a5a6; box-shadow: none; cursor: not-allowed; }
-
-        /* Task & List Items */
-        .task-container { padding: 15px; border-radius: 12px; margin-bottom: 10px; display: flex; align-items: center; gap: 15px; border: 1px solid; }
-        .light-theme .task-container { background-color: var(--surface-light); border-color: var(--border-light); }
-        .dark-theme .task-container { background-color: var(--surface-dark); border-color: var(--border-dark); }
-        .task-icon-img { width: 45px; height: 45px; border-radius: 10px; object-fit: cover; }
-        .task-info h3 { font-size: 1rem; font-weight: 600; }
-        .task-info p { font-size: 0.8rem; opacity: 0.8; }
-        .claim-btn { padding: 8px 15px; border-radius: 20px; border:none; background: var(--primary-color); color: white; cursor: pointer; margin-left: auto; font-size: 0.8rem; }
-
-        /* Leaderboard */
-        .leaderboard-toggle { display: flex; justify-content: center; margin-bottom: 20px; background: rgba(0,0,0,0.05); padding: 5px; border-radius: 30px; }
-        .toggle-btn { padding: 10px 30px; border: none; background: none; font-size: 0.9rem; cursor: pointer; border-radius: 25px; color: inherit; opacity: 0.6; }
-        .toggle-btn.active { background: var(--surface-light); font-weight: 700; opacity: 1; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .dark-theme .toggle-btn.active { background: var(--surface-dark); }
+        .stat-card h3 { font-size: 0.85rem; font-weight: 500; margin-bottom: 8px; text-transform: uppercase; }
+        .light-theme .stat-card h3 { color: var(--text-secondary-light); } .dark-theme .stat-card h3 { color: var(--text-secondary-dark); }
+        .stat-card p { font-size: 1.4rem; font-weight: 600; color: var(--primary-color); }
         
-        .leaderboard-list { list-style: none; }
-        .leaderboard-item { display: flex; align-items: center; padding: 12px; margin-bottom: 8px; border-radius: 10px; border: 1px solid; }
-        .light-theme .leaderboard-item { background-color: var(--surface-light); border-color: var(--border-light); }
-        .dark-theme .leaderboard-item { background-color: var(--surface-dark); border-color: var(--border-dark); }
-        .rank { font-size: 1.1rem; font-weight: 800; color: var(--primary-color); width: 35px; }
-        .leaderboard-item img { width: 40px; height: 40px; border-radius: 50%; margin-right: 15px; object-fit: cover; }
-        .leaderboard-score { margin-left: auto; font-weight: 700; color: var(--primary-color); }
+        .chart-container, .earning-wallet-card { padding: 20px; border-radius: 12px; margin-top: 20px; border: 1px solid; }
+        .light-theme .chart-container, .light-theme .earning-wallet-card { background-color: var(--surface-light); border-color: var(--border-light); }
+        .dark-theme .chart-container, .dark-theme .earning-wallet-card { background-color: var(--surface-dark); border-color: var(--border-dark); }
+        .chart { display: flex; justify-content: space-around; align-items: flex-end; height: 150px; border-left: 1px solid; border-bottom: 1px solid; padding-top: 10px; }
+        .light-theme .chart { border-color: var(--border-light); } .dark-theme .chart { border-color: var(--border-dark); }
+        .bar { width: 12%; background: linear-gradient(to top, var(--primary-color), var(--secondary-color)); border-radius: 5px 5px 0 0; position: relative; cursor: pointer; }
+        .bar .tooltip { position: absolute; top: -30px; left: 50%; transform: translateX(-50%); background: var(--secondary); color: white; padding: 3px 7px; border-radius: 5px; font-size: 0.8rem; white-space: nowrap; opacity: 0; transition: opacity 0.2s; pointer-events: none; }
+        .bar:hover .tooltip { opacity: 1; }
+        .chart-labels { display: flex; justify-content: space-around; font-size: 0.75rem; margin-top: 5px; }
 
-        /* Navigation */
-        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; max-width: 500px; margin: 0 auto; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid; z-index: 1000; border-radius: 20px 20px 0 0; box-shadow: 0 -5px 20px rgba(0,0,0,0.05); }
+        .history-item { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-radius: 10px; margin-bottom: 10px; }
+        .light-theme .history-item { background-color: var(--surface-light); border: 1px solid var(--border-light); }
+        .dark-theme .history-item { background-color: var(--surface-dark); border: 1px solid var(--border-dark); }
+        .history-details p { margin: 0; } .history-details p:first-child { font-weight: 600; }
+        .history-status { padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; color: white; text-transform: capitalize; }
+        .status-completed { background-color: var(--success); } .status-pending { background-color: var(--pending); } .status-rejected { background-color: var(--danger); }
+
+        .progress-container { margin-bottom: 20px; }
+        .progress-info { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 0.9rem; font-weight: 500; }
+        .progress-bar-bg { width: 100%; height: 10px; border-radius: 5px; }
+        .light-theme .progress-bar-bg { background-color: var(--border-light); }
+        .dark-theme .progress-bar-bg { background-color: var(--border-dark); }
+        .progress-bar-fg { height: 100%; border-radius: 5px; background: linear-gradient(90deg, var(--primary-color), var(--secondary-color)); transition: width 0.3s ease; }
+        
+        form input, form select, form textarea { transition: all 0.2s ease-in-out; border: 1px solid; }
+        .light-theme form input, .light-theme form select { border-color: var(--border-light); }
+        .dark-theme form input, .dark-theme form select { border-color: var(--border-dark); }
+        form input:focus, form select:focus, form textarea:focus { outline: none; border-color: var(--primary-color) !important; box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2); }
+
+        .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 10000; }
+        .popup-content { padding: 30px; border-radius: 15px; text-align: center; max-width: 80%; }
+        .light-theme .popup-content { background-color: var(--surface-light); } .dark-theme .popup-content { background-color: var(--surface-dark); }
+        .popup-content h2 { margin-bottom: 15px; color: var(--primary-color); } .popup-content p { margin-bottom: 20px; }
+        .popup-close-btn { padding: 10px 25px; border: none; border-radius: 8px; color: #fff; background-color: var(--primary-color); cursor: pointer; }
+        .popup-loader .spinner { width: 40px; height: 40px; border-radius: 50%; border: 4px solid; border-color: var(--primary-color) transparent; animation: spin 1s linear infinite; margin: 0 auto 15px;}
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
+        #app-loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .light-theme #app-loader { background-color: var(--background-light); } .dark-theme #app-loader { background-color: var(--background-dark); }
+        #app-loader .spinner { width: 50px; height: 50px; border-radius: 50%; border: 5px solid; border-color: var(--primary-color) transparent; animation: spin 1s linear infinite; }
+        #loading-progress { margin-top: 15px; font-size: 1.2rem; font-weight: 600; }
+        .light-theme #loading-progress { color: var(--text-primary-light); } .dark-theme #loading-progress { color: var(--text-primary-dark); }
+        
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; max-width: 500px; margin: 0 auto; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid; z-index: 1000; }
         .light-theme .bottom-nav { background-color: var(--surface-light); border-top-color: var(--border-light); }
         .dark-theme .bottom-nav { background-color: var(--surface-dark); border-top-color: var(--border-dark); }
-        .nav-btn { background: none; border: none; cursor: pointer; display: flex; flex-direction: column; align-items: center; font-size: 0.7rem; color: #999; transition: 0.2s; }
-        .nav-btn i { font-size: 1.4rem; margin-bottom: 4px; } 
-        .nav-btn.active { color: var(--primary-color); transform: translateY(-2px); }
-
-        /* VPN & Notice */
-        .notice-box { background: rgba(243, 156, 18, 0.1); border: 1px solid var(--secondary-color); padding: 15px; border-radius: 10px; margin-bottom: 20px; font-size: 0.9rem; display: flex; gap: 10px; align-items: center; color: var(--secondary-color); font-weight: 500; }
-        .vpn-card { background-color: #151b24; color: #fff; border-radius: 20px; padding: 30px 20px; text-align: center; margin-top: 20px; display: none; border: 1px solid #2c3542; }
-        .vpn-icon-box { width: 70px; height: 70px; background: #2c3542; border-radius: 18px; margin: 0 auto 20px; display: flex; justify-content: center; align-items: center; position: relative; }
-        .vpn-icon-box i { font-size: 30px; color: white; }
-        .retry-btn { background: #3b4754; color: white; border: none; width: 100%; padding: 14px; border-radius: 12px; font-weight: 600; cursor: pointer; margin-top: 20px; display: flex; align-items: center; justify-content: center; gap: 10px; }
-
-        /* Loader */
-        #app-loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-        .light-theme #app-loader { background: #fff; } .dark-theme #app-loader { background: #1B2631; }
-        .spinner { width: 40px; height: 40px; border: 4px solid var(--border-light); border-top: 4px solid var(--primary-color); border-radius: 50%; animation: spin 1s linear infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .nav-btn { background: none; border: none; cursor: pointer; display: flex; flex-direction: column; align-items: center; font-family: var(--font-family); font-size: 0.75rem; transition: color 0.2s; flex-grow: 1; }
+        .light-theme .nav-btn { color: var(--text-secondary-light); } .dark-theme .nav-btn { color: var(--text-secondary-dark); }
+        .nav-btn i { font-size: 1.5rem; margin-bottom: 4px; } .nav-btn.active { color: var(--primary-color); }
         
-        #popup { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); z-index: 10001; display: none; align-items: center; justify-content: center; }
-        .popup-content { background: white; padding: 25px; border-radius: 15px; text-align: center; width: 80%; }
-        .dark-theme .popup-content { background: #283747; color: white; }
+        .task-container { padding: 20px; border-radius: 12px; margin-bottom: 15px; display: flex; align-items: center; gap: 15px; }
+        .light-theme .task-container { background-color: var(--surface-light); border: 1px solid var(--border-light); }
+        .dark-theme .task-container { background-color: var(--surface-dark); border: 1px solid var(--border-dark); }
+        .task-icon-img { width: 40px; height: 40px; border-radius: 8px; object-fit: cover; }
+        .task-info h3 { font-size: 1.1rem; font-weight: 600; } .task-info p { font-size: 0.85rem; }
+        .action-btn { padding: 10px 20px; font-size: 0.9rem; font-weight: 600; color: #fff; border: none; border-radius: 8px; cursor: pointer; transition: all 0.2s; background: linear-gradient(45deg, var(--primary-color), var(--secondary-color)); margin-left: auto; white-space: nowrap; }
+        .action-btn:disabled { background: #808B96; cursor: not-allowed; }
+        
+        .leaderboard-toggle { display: flex; justify-content: space-around; margin-bottom: 15px; }
+        .toggle-btn { padding: 10px 20px; border: none; background: none; font-size: 1rem; cursor: pointer; }
+        .light-theme .toggle-btn { color: var(--text-secondary-light); } .dark-theme .toggle-btn { color: var(--text-secondary-dark); }
+        .toggle-btn.active { font-weight: 700; color: var(--primary-color); border-bottom: 2px solid var(--primary-color); }
+        .leaderboard-list { list-style: none; }
+        .leaderboard-item { display: flex; align-items: center; padding: 10px; margin-bottom: 8px; border-radius: 8px; }
+        .light-theme .leaderboard-item { background-color: var(--surface-light); } .dark-theme .leaderboard-item { background-color: var(--surface-dark); }
+        .rank { font-size: 1.2rem; font-weight: 700; color: var(--primary-color); width: 40px; }
+        .leaderboard-item img { width: 40px; height: 40px; border-radius: 50%; margin-right: 10px; object-fit: cover; }
+        .leaderboard-name { font-weight: 600; flex-grow: 1; } .leaderboard-score { font-weight: 600; color: var(--primary-color); }
     </style>
 </head>
 <body>
-    <!-- Loader -->
-    <div id="app-loader">
-        <div class="spinner"></div>
-        <p id="loading-progress" style="margin-top: 15px; font-weight: 600;">1%</p>
-    </div>
-
-    <!-- Popup -->
-    <div id="popup"><div class="popup-content"><div id="popup-body"></div><button class="action-btn" style="margin-top:15px" onclick="document.getElementById('popup').style.display='none'">Close</button></div></div>
-
+    <div id="app-loader"><div class="spinner"></div><p id="loading-progress">0%</p></div>
+    <div id="popup" class="popup-overlay"><div class="popup-content"><div id="popup-body"></div></div></div>
     <div id="app" style="display: none;">
-        
-        <!-- Header -->
-        <div class="profile-header">
-            <img id="user-photo" src="https://via.placeholder.com/85" alt="User">
-            <h2 id="user-name">User</h2>
-            <p>Main Balance: <span id="user-balance">0.00</span> TK</p>
-        </div>
-
-        <main style="padding: 0 15px;">
-            
-            <!-- Home Page -->
+        <header class="profile-header">
+            <img id="user-photo" src="https://via.placeholder.com/80" alt="User">
+            <h1 id="user-name">Loading...</h1>
+            <div id="user-balance-container">Main Balance: <span id="user-balance">0.00</span> TK</div>
+        </header>
+        <main id="main-content">
             <div id="home-page" class="page active">
                 <div class="stats-grid">
-                    <div class="stat-card"><h3>Today Ads</h3><p id="stat-daily">0</p></div>
-                    <div class="stat-card"><h3>Referrals</h3><p id="stat-ref">0</p></div>
-                    <div class="stat-card"><h3>Total Ads</h3><p id="stat-total-ads">0</p></div>
-                    <div class="stat-card"><h3>Total Income</h3><p id="stat-income">0.00</p></div>
+                    <div class="stat-card"><h3>Today's Ads</h3><p id="daily-ads-watched">0 / 0</p></div>
+                    <div class="stat-card"><h3>Total Referrals</h3><p id="referral-count">0</p></div>
+                    <div class="stat-card"><h3>Total Ads Watched</h3><p id="total-ads-watched">0</p></div>
+                    <div class="stat-card"><h3>Total Income</h3><p id="total-earned">0.00</p></div>
                 </div>
-                <div class="chart-container">
-                    <h3 style="margin-bottom: 15px; font-size: 0.9rem;">Earning Statistics</h3>
-                    <div id="chart-bars" class="chart"></div>
-                    <div id="chart-dates" class="chart-labels"></div>
+                <div id="earnings-graph-container" class="chart-container">
+                    <h3>Last 7 Days Earnings</h3>
+                    <div id="earnings-chart" class="chart"></div><div id="earnings-chart-labels" class="chart-labels"></div>
                 </div>
-                <div id="home-links" style="margin-top: 20px;"></div>
+                <div id="dynamic-links-container" style="margin-top: 20px;"></div>
             </div>
-
-            <!-- Tasks Page (Ads + VPN) -->
             <div id="tasks-page" class="page">
-                <div class="notice-box" id="task-notice-ui">
-                    <i class="fas fa-info-circle" style="font-size: 1.2rem;"></i>
-                    <span id="task-notice-text">Loading...</span>
+                <div class="earning-wallet-card">
+                    <h3>Earning Wallet</h3>
+                    <p style="font-size: 1.8rem; font-weight: 700; color: var(--primary-color); margin: 10px 0;"><span id="earning-wallet-balance">0.00</span> TK</p>
+                    <small>Minimum 100 TK to move to main balance.</small>
+                    <button id="move-to-balance-btn" class="action-btn" style="width:100%; margin-top: 15px;" disabled>Move to Main Balance</button>
                 </div>
-
-                <div id="ad-area" style="display:none;">
-                    <div style="background:rgba(0,0,0,0.05); height:8px; border-radius:4px; margin: 20px 0; overflow:hidden;">
-                        <div id="ad-progress" style="width:0%; height:100%; background:var(--primary-color); transition:0.3s;"></div>
-                    </div>
-                    <div class="task-container">
-                        <img src="https://img.icons8.com/fluency/48/play-button.png" class="task-icon-img">
-                        <div class="task-info"><h3>Watch Video Ad</h3><p>Get Reward Directly</p></div>
-                        <button id="btn-watch-ad" class="claim-btn">Watch</button>
-                    </div>
-                </div>
-
-                <div id="vpn-alert" class="vpn-card">
-                    <div class="vpn-icon-box"><i class="fas fa-wifi"></i><div style="position:absolute;width:3px;height:40px;background:white;transform:rotate(45deg)"></div></div>
-                    <h2>Access Restricted</h2>
-                    <p>Required Country: <span id="req-country" style="color: #F39C12;">...</span></p>
-                    <button class="retry-btn" onclick="checkVPN()"><i class="fas fa-sync-alt"></i> Retry</button>
-                </div>
+                <div id="ad-progress-container" class="progress-container" style="margin-top:20px;"></div>
+                <div id="ad-task-container"></div>
+                <h2>Bonus Tasks</h2><div id="dynamic-tasks-container"></div>
             </div>
-
-            <!-- Bonus Page -->
-            <div id="bonus-page" class="page">
-                <h2 style="margin-bottom: 20px;">Bonus Tasks</h2>
-                <div id="bonus-list"></div>
-            </div>
-
-            <!-- Leaderboard -->
             <div id="leaderboard-page" class="page">
-                <h2 style="text-align:center; margin-bottom:20px;">Leaderboard</h2>
+                <h2>Leaderboard</h2>
                 <div class="leaderboard-toggle">
-                    <button class="toggle-btn active" onclick="switchBoard('referral', this)">Top Referrers</button>
-                    <button class="toggle-btn" onclick="switchBoard('earning', this)">Top Earners</button>
+                    <button class="toggle-btn active" data-board="referral">Top Referrers</button>
+                    <button class="toggle-btn" data-board="earning">Top Earners</button>
                 </div>
-                <ul id="leaderboard-list" class="leaderboard-list">
-                    <li style="text-align:center; padding:20px;">Loading...</li>
-                </ul>
+                <div id="referral-board"><ul class="leaderboard-list" id="referral-leaderboard-list"></ul></div>
+                <div id="earning-board" style="display: none;"><ul class="leaderboard-list" id="earning-leaderboard-list"></ul></div>
             </div>
-
-            <!-- Profile (Custom Cards UI) -->
             <div id="profile-page" class="page">
-                
-                <!-- Invite Card -->
-                <div class="ui-card">
-                    <h3>Invite & Earn</h3>
-                    <p>Bonus: <span id="ref-bonus-val">0</span> TK</p>
-                    <input type="text" id="ref-link" class="card-input" readonly>
-                    <button class="action-btn" onclick="copyRef()">Copy</button>
+                <div id="referral-section"></div><div id="withdraw-section"></div>
+                <div id="withdrawal-history-section" style="margin-top: 20px;">
+                    <h2>Withdrawal History</h2><div id="withdrawal-history-list"></div>
                 </div>
-
-                <!-- Withdraw Card -->
-                <div class="ui-card">
-                    <h3>Withdraw</h3>
-                    <p id="withdraw-note">Loading...</p>
-                    <form id="withdraw-form">
-                        <select id="w-method" class="card-input" required><option>Loading...</option></select>
-                        <input id="w-account" class="card-input" placeholder="Account Number" required>
-                        <input id="w-amount" type="number" class="card-input" placeholder="Amount" required>
-                        <button type="submit" id="btn-withdraw" class="action-btn">Pay Cash</button>
-                    </form>
-                </div>
-
-                <h3 style="margin-top: 30px; margin-bottom: 15px;">History</h3>
-                <div id="history-list"></div>
             </div>
-
         </main>
-
-        <!-- Nav -->
         <nav class="bottom-nav">
-            <button class="nav-btn active" onclick="go('home-page', this)"><i class="fas fa-home"></i>Home</button>
-            <button class="nav-btn" onclick="go('tasks-page', this)"><i class="fas fa-play-circle"></i>Ad Task</button>
-            <button class="nav-btn" onclick="go('bonus-page', this)"><i class="fas fa-gift"></i>Bonus</button>
-            <button class="nav-btn" onclick="go('leaderboard-page', this)"><i class="fas fa-trophy"></i>Leaderboard</button>
-            <button class="nav-btn" onclick="go('profile-page', this)"><i class="fas fa-user"></i>Profile</button>
+            <button class="nav-btn active" data-page="home-page"><i class="fas fa-home"></i><span>Home</span></button>
+            <button class="nav-btn" data-page="tasks-page"><i class="fas fa-tasks"></i><span>Tasks</span></button>
+            <button class="nav-btn" data-page="leaderboard-page"><i class="fas fa-trophy"></i><span>Leaderboard</span></button>
+            <button class="nav-btn" data-page="profile-page"><i class="fas fa-user-alt"></i><span>Profile</span></button>
         </nav>
     </div>
 
@@ -271,7 +177,10 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     
     <script>
+    document.addEventListener('DOMContentLoaded', () => {
         const tg = window.Telegram.WebApp;
+        
+        // আপডেটেড কনফিগ
         const firebaseConfig = {
           apiKey: "AIzaSyDJPs6pXv2k_wTCNWHqsr5exFkvOMeIX40",
           authDomain: "orange-leamon-bot.firebaseapp.com",
@@ -282,346 +191,464 @@
           appId: "1:440970951072:web:6cf46f7720d260047c4cc5"
         };
         
-        let db, user, config = {}, userData = {};
-        let boards = { referral: [], earning: [] };
+        let appConfig = {}; let userState = {}; let tgUser = {}; let earningWalletBalance = 0;
+        let leaderboardData = { referral: [], earning: [] };
+        let userTransactions = [];
 
-        // --- Startup ---
-        async function init() {
-            tg.expand();
-            document.body.className = (tg.colorScheme || 'light') + '-theme';
+        const popup = document.getElementById('popup');
+        const popupBody = document.getElementById('popup-body');
+        const loadingProgress = document.getElementById('loading-progress');
+
+        const showPopup = (content) => { popupBody.innerHTML = content; popup.style.display = 'flex'; };
+        const closePopup = () => { popup.style.display = 'none'; };
+        const updateProgress = (percentage) => { loadingProgress.textContent = `${percentage}%`; };
+
+        const loadAdSdk = (zoneId) => {
+            if (!zoneId) { console.error("Ad Zone ID is missing from Firebase config!"); return; }
+            if (document.querySelector(`script[data-zone='${zoneId}']`)) return;
+            const script = document.createElement('script');
+            script.src = `//libtl.com/sdk.js`;
+            script.setAttribute('data-zone', zoneId);
+            script.setAttribute('data-sdk', `show_${zoneId}`);
+            script.async = true;
+            document.body.appendChild(script);
+        };
+
+        const initApp = async () => {
+            tg.ready(); tg.expand();
+            document.body.className = `${tg.colorScheme}-theme`;
+            tgUser = tg.initDataUnsafe.user;
             
-            // Progress 1%
-            const progress = document.getElementById('loading-progress');
-            progress.innerText = '1%';
+            // Testing fix: If no TG user (browser test), create dummy user
+            if (!tgUser || !tgUser.id) { 
+                console.warn("User data not found. Using Test User.");
+                tgUser = { id: 123456, first_name: "Test", last_name: "User", username: "testuser", photo_url: "" };
+            }
 
             try {
-                firebase.initializeApp(firebaseConfig);
-                db = firebase.database();
+                updateProgress(10); firebase.initializeApp(firebaseConfig); const db = firebase.database();
+                updateProgress(20);
                 
-                // User Fallback
-                user = tg.initDataUnsafe.user || {id:123456, first_name:'Test', username:'test', photo_url:''};
-                
-                progress.innerText = '20%';
-                await loadConfig();
-                
-                progress.innerText = '50%';
-                await loadUser();
-                
-                progress.innerText = '80%';
-                // Load Leaderboard & History in background (non-blocking)
-                loadLeaderboardData();
-                loadHistory();
+                const configSnapshot = await db.ref('config').once('value');
+                appConfig = configSnapshot.val() || {};
+                updateProgress(40);
 
-                if(config.adZoneId) {
-                    const s = document.createElement('script');
-                    s.src = '//libtl.com/sdk.js';
-                    s.dataset.zone = config.adZoneId;
-                    s.dataset.sdk = 'show_ad';
-                    document.body.appendChild(s);
-                }
+                await loadUserData(db); 
+                updateProgress(60);
 
-                progress.innerText = '100%';
+                const referralBoardPromise = db.ref('users').orderByChild('referrals').limitToLast(10).once('value');
+                const earningBoardPromise = db.ref('users').orderByChild('totalEarned').limitToLast(10).once('value');
+                const historyPromise = loadTransactionHistory(db);
+
+                const [referralBoardSnap, earningBoardSnap] = await Promise.all([referralBoardPromise, earningBoardPromise, historyPromise]);
+                updateProgress(80);
+
+                referralBoardSnap.forEach(child => { leaderboardData.referral.push(child.val()); });
+                earningBoardSnap.forEach(child => { leaderboardData.earning.push(child.val()); });
+                leaderboardData.referral.reverse(); leaderboardData.earning.reverse();
+                updateProgress(90);
+
+                if(appConfig.adZoneId) loadAdSdk(appConfig.adZoneId);
+                earningWalletBalance = parseFloat(localStorage.getItem(`earningWallet_${tgUser.id}`) || '0');
+                
+                renderUI(); setupNavigation(); setupEventListeners();
+                updateProgress(100);
+
                 setTimeout(() => {
                     document.getElementById('app-loader').style.display = 'none';
                     document.getElementById('app').style.display = 'block';
-                    renderUI();
-                }, 500);
+                    if (appConfig.welcomeMessage && !userState.welcomed) {
+                        showPopup(`<h2>Welcome!</h2><p>${appConfig.welcomeMessage}</p><button class="popup-close-btn">Continue</button>`);
+                        db.ref(`users/${tgUser.id}/welcomed`).set(true);
+                    }
+                }, 300);
+            } catch (error) { console.error("Initialization failed:", error); tg.showAlert("Failed to load app data. Please try again."); }
+        };
 
-            } catch(e) {
-                console.error(e);
-                alert("Error loading app. Please restart.");
-            }
-        }
-
-        // --- Data Loading ---
-        async function loadConfig() {
-            const s = await db.ref('config').once('value');
-            config = s.val() || {};
-        }
-
-        async function loadUser() {
-            const ref = db.ref(`users/${user.id}`);
-            let s = await ref.once('value');
+        const loadUserData = async (db) => {
+            const userRef = db.ref(`users/${tgUser.id}`);
+            const snapshot = await userRef.once('value');
+            let userData = snapshot.val();
             
-            if(!s.exists()) {
-                const refId = tg.initDataUnsafe.start_param;
-                await ref.set({
-                    id: user.id, firstName: user.first_name, username: user.username, photoUrl: user.photo_url,
-                    balance: 0, referrals: 0, totalEarned: 0, dailyAds: 0,
-                    lastDate: new Date().toDateString()
-                });
-                if(refId && refId != user.id) {
-                    const rRef = db.ref(`users/${refId}`);
-                    await rRef.child('referrals').set(firebase.database.ServerValue.increment(1));
-                    if(config.referralBonus) await rRef.child('balance').set(firebase.database.ServerValue.increment(config.referralBonus));
-                }
-                s = await ref.once('value');
-            }
-            userData = s.val();
-            // Daily Reset
-            if(userData.lastDate !== new Date().toDateString()) {
-                await ref.update({ dailyAds: 0, lastDate: new Date().toDateString() });
-                userData.dailyAds = 0;
-            }
-        }
-
-        async function loadLeaderboardData() {
-            try {
-                const rSnap = await db.ref('users').orderByChild('referrals').limitToLast(20).once('value');
-                const eSnap = await db.ref('users').orderByChild('totalEarned').limitToLast(20).once('value');
+            if (!userData) {
+                // This block runs ONLY for a new user
+                const startParam = tg.initDataUnsafe.start_param;
+                const referralId = (startParam && !isNaN(startParam)) ? startParam : null;
                 
-                boards.referral = [];
-                rSnap.forEach(c => boards.referral.push(c.val()));
-                boards.referral.reverse();
-
-                boards.earning = [];
-                eSnap.forEach(c => boards.earning.push(c.val()));
-                boards.earning.reverse();
+                userData = { id: tgUser.id, firstName: tgUser.first_name || '', lastName: tgUser.last_name || '', username: tgUser.username || '', photoUrl: tgUser.photo_url || '', balance: 0, referrals: 0, referredBy: referralId, totalEarned: 0, lifetimeAdCount: 0, lastAdWatchDate: '1970-01-01', dailyAdCount: 0, breakUntil: 0, completedTasks: {}, welcomed: false };
+                await userRef.set(userData);
                 
-                // If on leaderboard page, render now
-                if(document.getElementById('leaderboard-page').style.display === 'block') {
-                    switchBoard('referral', document.querySelector('.toggle-btn.active'));
+                // If there's a valid referrer, credit them.
+                if (referralId && referralId != tgUser.id) {
+                    const referrerRef = db.ref(`users/${referralId}`);
+                    const bonusAmount = parseFloat(appConfig.referralBonus || 0);
+                    
+                    if (bonusAmount > 0) {
+                        // We use transactions for safety to avoid race conditions.
+                        await referrerRef.transaction(currentData => {
+                            if (currentData) {
+                                currentData.balance = (currentData.balance || 0) + bonusAmount;
+                                currentData.referrals = (currentData.referrals || 0) + 1;
+                            }
+                            return currentData;
+                        });
+                    } else {
+                        // If no bonus, still increment the referral count
+                        await referrerRef.child('referrals').set(firebase.database.ServerValue.increment(1));
+                    }
                 }
-            } catch(e) { console.log("Leaderboard error", e); }
-        }
-
-        // --- UI Rendering ---
-        function renderUI() {
-            // Header
-            document.getElementById('user-name').innerText = userData.firstName;
-            document.getElementById('user-balance').innerText = (userData.balance||0).toFixed(2);
-            document.getElementById('user-photo').src = user.photo_url || 'https://via.placeholder.com/85';
-
-            // Home Stats
-            document.getElementById('stat-daily').innerText = `${userData.dailyAds}/${config.dailyAdLimit||0}`;
-            document.getElementById('stat-ref').innerText = userData.referrals;
-            document.getElementById('stat-total-ads').innerText = userData.lifetimeAdCount || userData.dailyAds; // fallback
-            document.getElementById('stat-income').innerText = (userData.totalEarned||0).toFixed(2);
-
-            // Profile Cards
-            document.getElementById('ref-bonus-val').innerText = config.referralBonus || 0;
-            document.getElementById('ref-link').value = `https://t.me/${config.botUsername}/app?startapp=${user.id}`;
-            document.getElementById('withdraw-note').innerText = `Need ${config.minimumWithdrawReferrals||0} Refs`;
+            }
             
-            const methodSel = document.getElementById('w-method');
-            methodSel.innerHTML = '<option value="">Select Method</option>';
-            (config.withdrawMethods||[]).forEach(m => {
-                methodSel.innerHTML += `<option value="${m.name}">${m.name} (Min: ${m.min})</option>`;
+            const today = new Date().toISOString().slice(0, 10);
+            if (userData.lastAdWatchDate !== today) {
+                userData.dailyAdCount = 0; userData.lastAdWatchDate = today;
+                await userRef.update({ dailyAdCount: 0, lastAdWatchDate: today });
+            }
+            userState = userData;
+        };
+        
+        const loadTransactionHistory = async (db) => {
+            userTransactions = []; // Clear previous history before loading
+            const statuses = ['pending', 'completed', 'rejected'];
+            const historyPromises = statuses.map(status => db.ref(`withdrawals/${status}`).orderByChild('userId').equalTo(tgUser.id).once('value'));
+            const snapshots = await Promise.all(historyPromises);
+            snapshots.forEach(snap => { snap.forEach(childSnap => { userTransactions.push(childSnap.val()); }); });
+            userTransactions.sort((a, b) => b.timestamp - a.timestamp);
+        };
+        
+        const renderUI = () => {
+            document.getElementById('user-photo').src = userState.photoUrl || 'https://via.placeholder.com/80';
+            document.getElementById('user-name').textContent = `${userState.firstName} ${userState.lastName}`;
+            document.getElementById('user-balance').textContent = (userState.balance || 0).toFixed(2);
+            document.getElementById('daily-ads-watched').textContent = `${userState.dailyAdCount || 0} / ${appConfig.dailyAdLimit || 0}`;
+            document.getElementById('referral-count').textContent = userState.referrals || 0;
+            document.getElementById('total-ads-watched').textContent = userState.lifetimeAdCount || 0;
+            document.getElementById('total-earned').textContent = (userState.totalEarned || 0).toFixed(2);
+            document.getElementById('earning-wallet-balance').textContent = earningWalletBalance.toFixed(2);
+            document.getElementById('move-to-balance-btn').disabled = earningWalletBalance < 100;
+            renderAdTask(); renderAdProgress(); renderDynamicTasks(); renderReferralSection(); renderWithdrawSection(); renderEarningsGraph(); renderDynamicLinks();
+        };
+        
+        const renderAdProgress = () => {
+            const container = document.getElementById('ad-progress-container');
+            const dailyLimit = appConfig.dailyAdLimit || 1;
+            const watchedCount = userState.dailyAdCount || 0;
+            const percentage = (watchedCount / dailyLimit) * 100;
+            container.innerHTML = `<div class="progress-info"><span>Daily Ad Progress</span><span>${watchedCount} / ${dailyLimit}</span></div><div class="progress-bar-bg"><div class="progress-bar-fg" style="width: ${percentage}%;"></div></div>`;
+        };
+        
+        const renderEarningsGraph = async () => {
+             const chartEl = document.getElementById('earnings-chart'); const labelsEl = document.getElementById('earnings-chart-labels');
+            chartEl.innerHTML = ''; labelsEl.innerHTML = '';
+            const today = new Date(); const dates = [];
+            for (let i = 6; i >= 0; i--) { const date = new Date(today); date.setDate(today.getDate() - i); dates.push(date.toISOString().slice(0, 10)); }
+            const earningsPromises = dates.map(date => firebase.database().ref(`userEarnings/${tgUser.id}/${date}`).once('value'));
+            const snapshots = await Promise.all(earningsPromises);
+            const earningsData = snapshots.map(snap => snap.val() || 0);
+            const maxEarning = Math.max(...earningsData, 1);
+            earningsData.forEach((earning, index) => {
+                const height = (earning / maxEarning) * 100;
+                const dateLabel = new Date(dates[index]).toLocaleDateString('en-US', { day: 'numeric' });
+                chartEl.innerHTML += `<div class="bar" style="height: ${height}%;"><span class="tooltip">${earning.toFixed(2)} TK</span></div>`;
+                labelsEl.innerHTML += `<span>${dateLabel}</span>`;
             });
-
-            // Task Notice
-            document.getElementById('task-notice-text').innerText = config.taskPageNotice || "Connect VPN";
-
-            renderGraph();
-            renderBonus();
-            renderHomeLinks();
-        }
-
-        // --- VPN & Ad Logic ---
-        async function checkVPN() {
-            const vpnCard = document.getElementById('vpn-alert');
-            const adArea = document.getElementById('ad-area');
-            const btn = vpnCard.querySelector('.retry-btn');
+        };
+        
+        const handleWatchAd = async () => {
+            if (userState.dailyAdCount >= appConfig.dailyAdLimit) { tg.showAlert("You have reached your daily ad watch limit."); return; }
+            const now = Date.now();
+            if (userState.breakUntil && now < userState.breakUntil) {
+                const remaining = Math.ceil((userState.breakUntil - now) / 60000);
+                tg.showAlert(`Please wait for ${remaining} more minutes.`); return;
+            }
             
-            const allowed = config.allowedCountry || 'United States';
-            document.getElementById('req-country').innerText = allowed;
-
-            btn.innerHTML = 'Checking...';
-
-            if(!config.vpnRequired) {
-                vpnCard.style.display = 'none'; adArea.style.display = 'block'; return;
+            const adFunction = window['show_' + appConfig.adZoneId];
+            if (typeof adFunction !== 'function') {
+                tg.showAlert("Ad network is not ready yet. Please wait a few seconds and try again."); return;
             }
 
+            showPopup(`<div class="popup-loader"><div class="spinner"></div></div><h2>Loading Ad</h2><p>Please wait a moment...</p>`);
+            
             try {
-                const res = await fetch('https://ipapi.co/json/');
-                const data = await res.json();
-                if((data.country_name||'').toLowerCase().includes(allowed.toLowerCase())) {
-                    vpnCard.style.display = 'none'; adArea.style.display = 'block';
-                } else {
-                    vpnCard.style.display = 'block'; adArea.style.display = 'none';
+                await adFunction();
+                closePopup();
+                const adValue = appConfig.adValue || 0;
+                
+                earningWalletBalance += adValue;
+                localStorage.setItem(`earningWallet_${tgUser.id}`, earningWalletBalance.toString());
+
+                userState.dailyAdCount++;
+                userState.lifetimeAdCount++;
+                userState.totalEarned = (userState.totalEarned || 0) + adValue;
+
+                const db = firebase.database(); const userRef = db.ref(`users/${tgUser.id}`);
+                const updates = {};
+                updates.dailyAdCount = userState.dailyAdCount;
+                updates.lifetimeAdCount = userState.lifetimeAdCount;
+                updates.totalEarned = userState.totalEarned;
+                if ((userState.dailyAdCount) % appConfig.adsPerBreak === 0 && appConfig.adsPerBreak > 0) {
+                    updates.breakUntil = Date.now() + (appConfig.breakDuration * 60000);
+                    userState.breakUntil = updates.breakUntil;
                 }
-            } catch(e) {
-                vpnCard.style.display = 'block'; adArea.style.display = 'none';
-            }
-            btn.innerHTML = '<i class="fas fa-sync-alt"></i> Retry';
-        }
+                await userRef.update(updates);
+                
+                const today = new Date().toISOString().slice(0, 10);
+                await db.ref(`userEarnings/${tgUser.id}/${today}`).set(firebase.database.ServerValue.increment(adValue));
 
-        document.getElementById('btn-watch-ad').addEventListener('click', async () => {
-            if(userData.dailyAds >= (config.dailyAdLimit||10)) return alert("Daily limit reached");
-            
-            if(typeof window.show_ad !== 'function') return alert("Ad loading...");
-            
-            try {
-                await window.show_ad();
-                const val = config.adValue || 0;
+                tg.HapticFeedback.notificationOccurred('success');
+                tg.showAlert(`+${adValue.toFixed(2)} TK added to your Earning Wallet.`);
                 
-                // Update Local
-                userData.balance = (userData.balance||0) + val;
-                userData.dailyAds++;
-                userData.totalEarned = (userData.totalEarned||0) + val;
-                
-                // Update DB
-                await db.ref(`users/${user.id}`).update({
-                    balance: userData.balance,
-                    dailyAds: userData.dailyAds,
-                    totalEarned: userData.totalEarned
-                });
-                
-                // Chart Data
-                await db.ref(`userEarnings/${user.id}/${new Date().toISOString().slice(0,10)}`).set(firebase.database.ServerValue.increment(val));
-
-                alert(`+${val} TK Added!`);
                 renderUI();
-            } catch(e) { alert("Ad Failed"); }
-        });
 
-        // --- Leaderboard Logic ---
-        window.switchBoard = (type, btn) => {
-            document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
+            } catch (error) {
+                console.error("Ad failed to load:", error);
+                closePopup();
+                tg.showAlert("Ad could not be loaded. Please try again.");
+            }
+        };
+
+        const handleMoveToBalance = async () => {
+            if(earningWalletBalance < 100) { tg.showAlert("You need at least 100 TK to move."); return; }
+            const btn = document.getElementById('move-to-balance-btn'); btn.disabled = true; btn.textContent = 'Moving...';
+            try {
+                const db = firebase.database();
+                await db.ref(`users/${tgUser.id}/balance`).set(firebase.database.ServerValue.increment(earningWalletBalance));
+                userState.balance += earningWalletBalance;
+                earningWalletBalance = 0;
+                localStorage.setItem(`earningWallet_${tgUser.id}`, '0');
+                tg.HapticFeedback.notificationOccurred('success');
+                tg.showAlert("Successfully moved to main balance!");
+            } catch(error) { console.error("Failed to move balance:", error); tg.showAlert("Failed to move balance. Please try again.");
+            } finally { btn.textContent = 'Move to Main Balance'; renderUI(); }
+        };
+
+        const renderWithdrawalHistory = () => {
+            const listEl = document.getElementById('withdrawal-history-list');
+            if (userTransactions.length === 0) { listEl.innerHTML = '<p>No withdrawal history found.</p>'; return; }
+            listEl.innerHTML = userTransactions.map(item => `
+                <div class="history-item">
+                    <div class="history-details">
+                        <p>${item.amount.toFixed(2)} TK - ${item.method}</p>
+                        <small>${new Date(item.timestamp).toLocaleString()}</small>
+                    </div>
+                    <span class="history-status status-${item.status}">${item.status}</span>
+                </div>`).join('');
+        };
+        
+        const setupNavigation = () => {
+            const navButtons = document.querySelectorAll('.nav-btn'); const pages = document.querySelectorAll('.page');
+            navButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const pageId = button.dataset.page;
+                    pages.forEach(page => page.classList.remove('active'));
+                    document.getElementById(pageId).classList.add('active');
+                    navButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    if (pageId === 'profile-page') { renderWithdrawalHistory(); }
+                    if (pageId === 'leaderboard-page') { renderLeaderboard(); }
+                });
+            });
+        };
+        
+        const setupEventListeners = () => {
+            popup.addEventListener('click', (e) => { if (e.target.classList.contains('popup-close-btn') || e.target.id === 'popup') closePopup(); });
+            document.querySelector('.leaderboard-toggle').addEventListener('click', (e) => {
+                if(e.target.classList.contains('toggle-btn')) {
+                    document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    renderLeaderboard();
+                }
+            });
+            document.getElementById('dynamic-tasks-container').addEventListener('click', (e) => handleClaimTask(e));
+            // Event listener is attached directly to the form now for better handling
+            document.getElementById('profile-page').addEventListener('submit', (e) => handleWithdraw(e));
+            document.getElementById('referral-section').addEventListener('click', (e) => { if(e.target.id === 'copy-ref-link-btn') copyReferralLink(); });
+            document.getElementById('move-to-balance-btn').addEventListener('click', handleMoveToBalance);
+        };
+
+        const renderAdTask = () => {
+            const container = document.getElementById('ad-task-container');
+            const now = Date.now();
+            const onBreak = userState.breakUntil && now < userState.breakUntil;
+            const limitReached = userState.dailyAdCount >= appConfig.dailyAdLimit;
+            let html = '';
+            if (onBreak) {
+                const remaining = Math.ceil((userState.breakUntil - now) / 60000);
+                html = `<div class="task-container"><img class="task-icon-img" src="https://img.icons8.com/ios-filled/100/hourglass.png" alt="icon"><div class="task-info"><h3>Break Time!</h3><p>Please wait for ${remaining} more minutes.</p></div><button class="action-btn" disabled>Waiting</button></div>`;
+            } else if (limitReached) {
+                html = `<div class="task-container"><img class="task-icon-img" src="https://img.icons8.com/ios-filled/100/stop-circled.png" alt="icon"><div class="task-info"><h3>Daily Limit Reached</h3><p>Come back tomorrow for more ads.</p></div><button class="action-btn" disabled>Limit</button></div>`;
+            } else {
+                html = `<div class="task-container"><img class="task-icon-img" src="https://img.icons8.com/ios-filled/100/play-button-circled.png" alt="icon"><div class="task-info"><h3>Watch a Rewarded Ad</h3><p>Earn ${appConfig.adValue || 0} TK for every ad.</p></div><button id="watch-ad-btn" class="action-btn">Watch Ad</button></div>`;
+            }
+            container.innerHTML = html;
+            if (!onBreak && !limitReached) { document.getElementById('watch-ad-btn').addEventListener('click', handleWatchAd); }
+        };
+
+        const handleClaimTask = async (e) => {
+            if (e.target.classList.contains('action-btn') && e.target.dataset.taskId) {
+                const taskId = e.target.dataset.taskId;
+                const task = appConfig.tasks[taskId];
+                if (!task || (userState.completedTasks && userState.completedTasks[taskId])) { tg.showAlert('You have already claimed this bonus.'); return; }
+                tg.openLink(e.target.dataset.taskUrl);
+                e.target.disabled = true; e.target.textContent = 'Claiming...';
+                setTimeout(async () => {
+                    try {
+                        const db = firebase.database(); const userRef = db.ref(`users/${tgUser.id}`);
+                        await userRef.child(`completedTasks/${taskId}`).set(true);
+                        await userRef.child('balance').set(firebase.database.ServerValue.increment(task.reward));
+                        userState.balance += task.reward;
+                        if (!userState.completedTasks) userState.completedTasks = {};
+                        userState.completedTasks[taskId] = true;
+                        tg.HapticFeedback.notificationOccurred('success');
+                        tg.showAlert(`Thank you! You received ${task.reward} bonus TK.`);
+                        renderUI();
+                    } catch (error) { tg.showAlert('Failed to claim bonus.'); e.target.disabled = false; e.target.textContent = 'Claim Bonus'; }
+                }, 5000);
+            }
+        };
+
+        const handleWithdraw = async (e) => {
+            // Ensure this function only runs for the withdraw form
+            if(e.target.id !== 'withdraw-form') return;
+            e.preventDefault();
+
+            // *** NEW: Minimum referral check ***
+            const minRefsRequired = appConfig.minimumWithdrawReferrals || 0;
+            const userReferrals = userState.referrals || 0;
             
-            const list = document.getElementById('leaderboard-list');
-            list.innerHTML = '';
-            
-            const data = boards[type] || [];
-            if(data.length === 0) {
-                list.innerHTML = '<li style="text-align:center;padding:20px;">No Data Found</li>';
-                return;
+            if (minRefsRequired > 0 && userReferrals < minRefsRequired) {
+                tg.showAlert(`Withdrawal failed. You need at least ${minRefsRequired} referrals to make a withdrawal. You currently have ${userReferrals}.`);
+                return; // Stop the function here
             }
 
-            data.forEach((u, i) => {
-                list.innerHTML += `
-                <li class="leaderboard-item">
-                    <span class="rank">#${i+1}</span>
-                    <img src="${u.photoUrl || 'https://via.placeholder.com/40'}">
-                    <span>${u.firstName}</span>
-                    <span class="leaderboard-score">${type==='referral' ? u.referrals : (u.totalEarned||0).toFixed(2)}</span>
-                </li>`;
+            const methodEl = document.getElementById('withdraw-method');
+            const accountNumber = document.getElementById('account-number').value;
+            const amount = parseFloat(document.getElementById('amount').value);
+            const selectedMethod = appConfig.withdrawMethods.find(m => m.name === methodEl.value);
+            
+            if (isNaN(amount) || amount <= 0) { tg.showAlert("Please enter a valid amount."); return; }
+            if (!selectedMethod) { tg.showAlert("Invalid withdrawal method."); return; }
+            if (amount < selectedMethod.min) { tg.showAlert(`Minimum withdrawal for ${selectedMethod.name} is ${selectedMethod.min} TK.`); return; }
+            if (amount > userState.balance) { tg.showAlert("You don't have enough balance."); return; }
+            
+            const btn = document.getElementById('withdraw-submit-btn'); btn.disabled = true; btn.textContent = 'Submitting...';
+            const db = firebase.database();
+            try {
+                const userRef = db.ref(`users/${tgUser.id}`);
+                // Optimistically update local state for faster UI response
+                userState.balance -= amount;
+                renderUI(); 
+                
+                // Perform database operations
+                await userRef.child('balance').set(firebase.database.ServerValue.increment(-amount));
+                const reqId = db.ref('withdrawals/pending').push().key;
+                const newRequest = { id: reqId, userId: tgUser.id, userName: `${userState.firstName} ${userState.lastName}`, method: selectedMethod.name, account: accountNumber, amount: amount, status: 'pending', timestamp: firebase.database.ServerValue.TIMESTAMP };
+                await db.ref(`withdrawals/pending/${reqId}`).set(newRequest);
+                
+                // Add to local history instantly and re-render history
+                userTransactions.unshift(newRequest);
+                renderWithdrawalHistory(); 
+
+                tg.HapticFeedback.notificationOccurred('success');
+                tg.showAlert("Withdrawal request submitted successfully!");
+                document.getElementById('withdraw-form').reset();
+            } catch (error) {
+                // If error, revert the optimistic update
+                userState.balance += amount;
+                tg.HapticFeedback.notificationOccurred('error'); 
+                tg.showAlert("Failed to submit request. Your balance has been restored.");
+            } finally {
+                // Ensure UI is correct and button is re-enabled
+                renderUI();
+                btn.disabled = false;
+                btn.textContent = 'Submit Request';
+            }
+        };
+
+        const copyReferralLink = () => {
+            const refLinkInput = document.getElementById('referral-link');
+            refLinkInput.select();
+            refLinkInput.setSelectionRange(0, 99999); // For mobile devices
+            try {
+                navigator.clipboard.writeText(refLinkInput.value).then(() => {
+                    tg.HapticFeedback.notificationOccurred('success');
+                    tg.showAlert("Referral link copied!");
+                });
+            } catch (err) {
+                // Fallback for older browsers
+                document.execCommand('copy');
+                tg.HapticFeedback.notificationOccurred('success');
+                tg.showAlert("Referral link copied!");
+            }
+        };
+
+        const renderLeaderboard = () => {
+            const activeBoard = document.querySelector('.toggle-btn.active').dataset.board;
+            const listEl = document.getElementById(activeBoard === 'referral' ? 'referral-leaderboard-list' : 'earning-leaderboard-list');
+            const data = leaderboardData[activeBoard];
+            document.getElementById('referral-board').style.display = activeBoard === 'referral' ? 'block' : 'none';
+            document.getElementById('earning-board').style.display = activeBoard === 'earning' ? 'block' : 'none';
+            listEl.innerHTML = '';
+            if (data.length === 0) { listEl.innerHTML = '<li>No data available.</li>'; return; }
+            data.forEach((user, index) => {
+                const score = activeBoard === 'referral' ? (user.referrals || 0) : (user.totalEarned || 0).toFixed(2);
+                const item = document.createElement('li'); item.className = 'leaderboard-item';
+                item.innerHTML = `<span class="rank">#${index + 1}</span><img src="${user.photoUrl || 'https://via.placeholder.com/40'}" alt="User"><span class="leaderboard-name">${user.firstName}</span><span class="leaderboard-score">${score}</span>`;
+                listEl.appendChild(item);
             });
         };
 
-        // --- Helper Renders ---
-        function renderBonus() {
-            const list = document.getElementById('bonus-list');
-            list.innerHTML = '';
-            if(config.tasks) Object.entries(config.tasks).forEach(([k, t]) => {
-                const done = userData.tasks && userData.tasks[k];
-                list.innerHTML += `
-                <div class="task-container">
-                    <img src="${t.icon}" class="task-icon-img">
-                    <div class="task-info"><h3>${t.name}</h3><p>+${t.reward} TK</p></div>
-                    <button class="claim-btn" ${done?'disabled':''} onclick="doTask('${k}', '${t.url}', ${t.reward})">${done?'Done':'Claim'}</button>
-                </div>`;
-            });
-        }
-
-        function renderHomeLinks() {
-            const div = document.getElementById('home-links');
-            div.innerHTML = '';
-            if(config.links) Object.values(config.links).forEach(l => {
-                div.innerHTML += `
-                <div class="task-container">
-                    <img src="${l.icon}" class="task-icon-img">
-                    <div class="task-info"><h3>${l.name}</h3></div>
-                    <button class="claim-btn" onclick="tg.openLink('${l.url}')">Visit</button>
-                </div>`;
-            });
-        }
-
-        function renderGraph() {
-            const bars = document.getElementById('chart-bars');
-            const dates = document.getElementById('chart-dates');
-            bars.innerHTML = ''; dates.innerHTML = '';
-            // Mock empty for speed, real data needs async
-            for(let i=0;i<7;i++) {
-                bars.innerHTML += `<div class="bar" style="height:10%"></div>`;
-                dates.innerHTML += `<span>D${i+1}</span>`;
-            }
-            // Fetch real graph
-            const dArr = [];
-            for(let i=6;i>=0;i--) {
-                const d = new Date(); d.setDate(d.getDate()-i);
-                dArr.push(d.toISOString().slice(0,10));
-            }
-            Promise.all(dArr.map(d => db.ref(`userEarnings/${user.id}/${d}`).once('value'))).then(snaps => {
-                const vals = snaps.map(s => s.val()||0);
-                const max = Math.max(...vals, 1);
-                bars.innerHTML = ''; dates.innerHTML = '';
-                vals.forEach((v, i) => {
-                    bars.innerHTML += `<div class="bar" style="height:${(v/max)*100}%"></div>`;
-                    dates.innerHTML += `<span>${dArr[i].slice(8)}</span>`;
+        const renderDynamicTasks = () => {
+            const container = document.getElementById('dynamic-tasks-container'); container.innerHTML = '';
+            if (appConfig.tasks) {
+                const tasks = [];
+                for(const key in appConfig.tasks) { tasks.push({key, ...appConfig.tasks[key]}); }
+                tasks.reverse();
+                tasks.forEach(task => {
+                    const isCompleted = userState.completedTasks && userState.completedTasks[task.key];
+                    const el = document.createElement('div'); el.className = 'task-container';
+                    el.innerHTML = `<img class="task-icon-img" src="${task.icon}" alt="icon"><div class="task-info"><h3>${task.name}</h3><p>Get ${task.reward} bonus TK.</p></div><button class="action-btn" data-task-id="${task.key}" data-task-url="${task.url}" ${isCompleted ? 'disabled' : ''}>${isCompleted ? 'Claimed' : 'Claim Bonus'}</button>`;
+                    container.appendChild(el);
                 });
-            });
-        }
+            }
+        };
 
-        function loadHistory() {
-            db.ref('withdrawals/pending').orderByChild('userId').equalTo(user.id).limitToLast(10).on('value', s => {
-                const list = document.getElementById('history-list');
-                list.innerHTML = '';
-                if(!s.exists()) list.innerHTML = '<p style="text-align:center;opacity:0.6">No History</p>';
-                else s.forEach(c => {
-                    const d = c.val();
-                    list.innerHTML += `<div class="leaderboard-item" style="display:block; padding:10px;">
-                        <div style="display:flex;justify-content:space-between"><b>${d.method}</b><b>${d.amount} TK</b></div>
-                        <small>${new Date(d.timestamp).toLocaleDateString()} - ${d.status}</small>
-                    </div>`;
+        const renderReferralSection = () => {
+            const container = document.getElementById('referral-section');
+            const refLink = `https://t.me/${appConfig.botUsername}/app?startapp=${tgUser.id}`;
+            container.innerHTML = `<div class="task-container" style="flex-direction: column; align-items: stretch;"><h3>Refer & Earn More!</h3><p>Invite friends and earn ${appConfig.referralBonus || 0} TK per referral.</p><input type="text" id="referral-link" value="${refLink}" readonly style="padding: 10px; text-align: center; border-radius: 8px; border: 1px dashed var(--primary-color); margin: 10px 0;"><button id="copy-ref-link-btn" class="action-btn">Copy Link</button></div>`;
+        };
+
+        const renderWithdrawSection = () => {
+            const container = document.getElementById('withdraw-section'); let optionsHtml = '';
+            if (appConfig.withdrawMethods) { appConfig.withdrawMethods.forEach(method => { optionsHtml += `<option value="${method.name}">${method.name} (Min: ${method.min} TK)</option>`; }); }
+            
+            // *** NEW: Add notice about referral requirement ***
+            const minRefs = appConfig.minimumWithdrawReferrals || 0;
+            let referralNotice = '';
+            if (minRefs > 0) {
+                referralNotice = `<p style="font-size: 0.85rem; text-align: center; margin-bottom: 15px; opacity: 0.8;"><b>Note:</b> You need at least <b>${minRefs} referrals</b> to be eligible for withdrawal.</p>`;
+            }
+
+            container.innerHTML = `<form id="withdraw-form" class="task-container" style="flex-direction: column; align-items: stretch;"><h3>Request Withdraw</h3>${referralNotice}<div class="form-group" style="width:100%"><label for="withdraw-method">Method:</label><select id="withdraw-method" required style="width: 100%; padding: 10px; border-radius: 8px;">${optionsHtml}</select></div><div class="form-group" style="width:100%"><label for="account-number">Account Number/ID:</label><input type="text" id="account-number" required style="width: 100%; padding: 10px; border-radius: 8px;"></div><div class="form-group" style="width:100%"><label for="amount">Amount:</label><input type="number" step="any" id="amount" required style="width: 100%; padding: 10px; border-radius: 8px;"></div><button type="submit" id="withdraw-submit-btn" class="action-btn">Submit Request</button></form>`;
+        };
+
+        const renderDynamicLinks = () => {
+            const container = document.getElementById('dynamic-links-container'); container.innerHTML = '';
+            if (appConfig.links) {
+                const links = [];
+                for (const key in appConfig.links) { links.push({key, ...appConfig.links[key]}); }
+                links.reverse();
+                links.forEach(link => {
+                    const el = document.createElement('div'); el.className = 'task-container';
+                    el.innerHTML = `<img class="task-icon-img" src="${link.icon}" alt="icon"><div class="task-info"><h3>${link.name}</h3></div><button class="action-btn" onclick="window.Telegram.WebApp.openLink('${link.url}')">Visit</button>`;
+                    container.appendChild(el);
                 });
-            });
-        }
+            }
+        };
 
-        // --- Actions ---
-        window.copyRef = () => {
-            const el = document.getElementById('ref-link');
-            el.select();
-            document.execCommand('copy');
-            alert("Link Copied!");
-        }
-
-        window.doTask = (k, url, r) => {
-            tg.openLink(url);
-            setTimeout(async () => {
-                if(confirm("Did you join?")) {
-                    await db.ref(`users/${user.id}/balance`).set(firebase.database.ServerValue.increment(r));
-                    await db.ref(`users/${user.id}/tasks/${k}`).set(true);
-                    userData.balance += r;
-                    if(!userData.tasks) userData.tasks = {}; userData.tasks[k]=true;
-                    renderUI();
-                }
-            }, 5000);
-        }
-
-        window.go = (pg, btn) => {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(pg).classList.add('active');
-            btn.classList.add('active');
-            if(pg === 'tasks-page') checkVPN();
-        }
-
-        document.getElementById('withdraw-form').addEventListener('submit', async e => {
-            e.preventDefault();
-            const min = config.minimumWithdrawReferrals || 0;
-            if(userData.referrals < min) return alert(`Need ${min} Referrals`);
-            
-            const amt = parseFloat(document.getElementById('w-amount').value);
-            if(amt > userData.balance) return alert("Insufficient Balance");
-            
-            const met = document.getElementById('w-method').value;
-            const metObj = config.withdrawMethods.find(m => m.name === met);
-            if(amt < metObj.min) return alert(`Min withdraw ${metObj.min}`);
-
-            await db.ref('withdrawals/pending').push({
-                userId: user.id, userName: user.first_name,
-                method: met, account: document.getElementById('w-account').value,
-                amount: amt, timestamp: firebase.database.ServerValue.TIMESTAMP, status: 'pending'
-            });
-            await db.ref(`users/${user.id}/balance`).set(firebase.database.ServerValue.increment(-amt));
-            userData.balance -= amt;
-            renderUI();
-            alert("Request Submitted");
-        });
-
-        init();
+        initApp();
+    });
     </script>
 </body>
 </html>
