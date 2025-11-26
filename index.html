@@ -26,10 +26,7 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         
         /* Headers & Profile */
-        .profile-header {
-            padding: 25px 15px; border-bottom: 1px solid;
-            display: flex; flex-direction: column; align-items: center; text-align: center;
-        }
+        .profile-header { padding: 25px 15px; border-bottom: 1px solid; display: flex; flex-direction: column; align-items: center; text-align: center; }
         .light-theme .profile-header { background-color: var(--surface-light); border-bottom-color: var(--border-light); }
         .dark-theme .profile-header { background-color: var(--surface-dark); border-bottom-color: var(--border-dark); }
         #user-photo { width: 80px; height: 80px; border-radius: 50%; border: 4px solid var(--primary-color); object-fit: cover; margin-bottom: 10px; }
@@ -116,109 +113,35 @@
         .leaderboard-item img { width: 40px; height: 40px; border-radius: 50%; margin-right: 10px; object-fit: cover; }
         .leaderboard-name { font-weight: 600; flex-grow: 1; } .leaderboard-score { font-weight: 600; color: var(--primary-color); }
 
-        /* --- Daily Goal Card Styles --- */
-        .daily-goal-card {
-            padding: 20px;
-            border-radius: 15px;
-            border: 1px solid;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            margin-bottom: 20px;
-        }
-        .light-theme .daily-goal-card { 
-            background: linear-gradient(135deg, #FFFFFF, #F8F9F9);
-            border-color: var(--border-light); 
-        }
-        .dark-theme .daily-goal-card { 
-            background: linear-gradient(135deg, var(--surface-dark), #1A252F);
-            border-color: var(--border-dark);
-            color: white;
-        }
-
+        /* Daily Goal Card */
+        .daily-goal-card { padding: 20px; border-radius: 15px; border: 1px solid; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        .light-theme .daily-goal-card { background: linear-gradient(135deg, #FFFFFF, #F8F9F9); border-color: var(--border-light); }
+        .dark-theme .daily-goal-card { background: linear-gradient(135deg, var(--surface-dark), #1A252F); border-color: var(--border-dark); color: white; }
         .goal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
         .goal-header h3 { font-size: 1.1rem; font-weight: 700; margin: 0; }
-        .goal-icon { 
-            width: 40px; height: 40px; 
-            background: rgba(231, 76, 60, 0.1); 
-            color: var(--primary-color);
-            border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
-        }
-
+        .goal-icon { width: 40px; height: 40px; background: rgba(231, 76, 60, 0.1); color: var(--primary-color); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
         .goal-circle-container { text-align: center; margin-bottom: 15px; }
         .goal-stat { font-size: 2.5rem; font-weight: 800; color: var(--primary-color); line-height: 1; }
         .goal-divider { font-size: 1.5rem; color: var(--text-secondary-light); font-weight: 400; }
         .dark-theme .goal-divider { color: var(--text-secondary-dark); }
-
-        .goal-progress-track {
-            width: 100%; height: 12px;
-            background-color: rgba(0,0,0,0.05);
-            border-radius: 6px; overflow: hidden;
-        }
+        .goal-progress-track { width: 100%; height: 12px; background-color: rgba(0,0,0,0.05); border-radius: 6px; overflow: hidden; }
         .dark-theme .goal-progress-track { background-color: rgba(255,255,255,0.1); }
-        .goal-progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-            border-radius: 6px;
-            transition: width 0.5s ease;
-        }
+        .goal-progress-fill { height: 100%; background: linear-gradient(90deg, var(--primary-color), var(--secondary-color)); border-radius: 6px; transition: width 0.5s ease; }
 
-        /* --- VPN Restricted Card Styles --- */
-        .vpn-restricted-card {
-            padding: 30px 20px;
-            border-radius: 15px;
-            text-align: center;
-            border: 1px solid;
-            margin-top: 15px;
-            animation: fadeIn 0.3s;
-        }
+        /* VPN Restricted Card */
+        .vpn-restricted-card { padding: 30px 20px; border-radius: 15px; text-align: center; border: 1px solid; margin-top: 15px; animation: fadeIn 0.3s; }
         .light-theme .vpn-restricted-card { background-color: #F8F9F9; border-color: var(--border-light); }
         .dark-theme .vpn-restricted-card { background-color: #212F3D; border-color: var(--border-dark); }
-        
-        .vpn-icon-container {
-            width: 60px; height: 60px;
-            background-color: rgba(128, 139, 150, 0.2);
-            border-radius: 12px;
-            display: flex; justify-content: center; align-items: center;
-            margin: 0 auto 15px;
-            position: relative;
-        }
+        .vpn-icon-container { width: 60px; height: 60px; background-color: rgba(128, 139, 150, 0.2); border-radius: 12px; display: flex; justify-content: center; align-items: center; margin: 0 auto 15px; position: relative; }
         .vpn-icon-container i { font-size: 2rem; color: var(--text-secondary-light); }
         .dark-theme .vpn-icon-container i { color: var(--text-secondary-dark); }
-        .vpn-alert-badge {
-            position: absolute; top: -5px; right: -5px;
-            background-color: rgba(255, 255, 255, 0.2);
-            border-radius: 50%; width: 20px; height: 20px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 12px; font-weight: bold;
-        }
-        
+        .vpn-alert-badge { position: absolute; top: -5px; right: -5px; background-color: rgba(255, 255, 255, 0.2); border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; }
         .vpn-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 8px; }
         .vpn-subtitle { font-size: 0.9rem; opacity: 0.8; margin-bottom: 15px; }
-        .allowed-countries-tag {
-            background-color: rgba(231, 76, 60, 0.1);
-            color: var(--primary-color);
-            padding: 5px 10px; border-radius: 5px;
-            font-size: 0.85rem; font-weight: 600;
-            display: inline-block; margin-bottom: 20px;
-        }
-        
-        .retry-btn {
-            width: 100%; padding: 12px;
-            border-radius: 10px; border: none;
-            background-color: #566573; color: white;
-            font-weight: 600; font-size: 1rem;
-            cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px;
-        }
+        .allowed-countries-tag { background-color: rgba(231, 76, 60, 0.1); color: var(--primary-color); padding: 5px 10px; border-radius: 5px; font-size: 0.85rem; font-weight: 600; display: inline-block; margin-bottom: 20px; }
+        .retry-btn { width: 100%; padding: 12px; border-radius: 10px; border: none; background-color: #566573; color: white; font-weight: 600; font-size: 1rem; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; }
         .retry-btn:hover { background-color: #43505e; }
-        
-        .vpn-notice-box {
-            background: rgba(243, 156, 18, 0.15);
-            border-left: 4px solid var(--secondary-color);
-            padding: 10px 15px;
-            border-radius: 5px;
-            font-size: 0.85rem;
-            margin-bottom: 15px;
-            display: flex; align-items: center; gap: 10px;
-        }
+        .vpn-notice-box { background: rgba(243, 156, 18, 0.15); border-left: 4px solid var(--secondary-color); padding: 10px 15px; border-radius: 5px; font-size: 0.85rem; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
         .vpn-notice-box i { color: var(--secondary-color); }
     </style>
 </head>
@@ -232,7 +155,6 @@
             <div id="user-balance-container">Main Balance: <span id="user-balance">0.00</span> TK</div>
         </header>
         <main id="main-content">
-            <!-- HOME PAGE -->
             <div id="home-page" class="page active">
                 <div class="stats-grid">
                     <div class="stat-card"><h3>Today's Ads</h3><p id="daily-ads-watched">0 / 0</p></div>
@@ -246,85 +168,31 @@
                 </div>
                 <div id="dynamic-links-container" style="margin-top: 20px;"></div>
             </div>
-
-            <!-- TASKS PAGE (Daily/Ad Tasks) -->
             <div id="tasks-page" class="page">
-                
-                <!-- Daily Goal Card -->
                 <div class="daily-goal-card">
-                    <div class="goal-header">
-                        <div>
-                            <h3>Today's Goal</h3>
-                            <small id="connection-status-text" style="color:var(--success);">Wait for connection...</small>
-                        </div>
-                        <div class="goal-icon">
-                            <i class="fas fa-bullseye"></i>
-                        </div>
-                    </div>
-                    
-                    <div class="goal-circle-container">
-                        <div class="goal-stat">
-                            <span id="goal-current">0</span>
-                            <span class="goal-divider">/</span>
-                            <span id="goal-total">0</span>
-                        </div>
-                        <p>Ads Watched</p>
-                    </div>
-
-                    <div class="goal-progress-track">
-                        <div id="goal-progress-fill" class="goal-progress-fill" style="width: 0%;"></div>
-                    </div>
-                    <p style="text-align: center; font-size: 0.8rem; margin-top: 10px; opacity: 0.7;">
-                        Reset at 12:00 AM
-                    </p>
+                    <div class="goal-header"><div><h3>Today's Goal</h3><small id="connection-status-text" style="color:var(--success);">Wait for connection...</small></div><div class="goal-icon"><i class="fas fa-bullseye"></i></div></div>
+                    <div class="goal-circle-container"><div class="goal-stat"><span id="goal-current">0</span><span class="goal-divider">/</span><span id="goal-total">0</span></div><p>Ads Watched</p></div>
+                    <div class="goal-progress-track"><div id="goal-progress-fill" class="goal-progress-fill" style="width: 0%;"></div></div>
+                    <p style="text-align: center; font-size: 0.8rem; margin-top: 10px; opacity: 0.7;">Reset at 12:00 AM</p>
                 </div>
-
-                <!-- Persistent Notice Board -->
-                <div id="vpn-notice-board" class="vpn-notice-box" style="display:none; margin-top: 20px;">
-                    <i class="fas fa-info-circle"></i>
-                    <span id="vpn-notice-text">Notice: Please connect VPN.</span>
-                </div>
-
-                <!-- VPN Restricted View / Ad Button Area -->
-                <div id="ad-task-area">
-                    <!-- Loading state -->
-                    <div id="ad-task-loading" style="text-align: center; padding: 20px;">
-                        <div class="spinner" style="width:30px; height:30px; border:3px solid var(--primary-color); border-top-color:transparent; border-radius:50%; animation:spin 1s linear infinite; margin:0 auto;"></div>
-                        <p style="margin-top:10px; font-size:0.9rem;">Checking connection...</p>
-                    </div>
-                </div>
+                <div id="vpn-notice-board" class="vpn-notice-box" style="display:none; margin-top: 20px;"><i class="fas fa-info-circle"></i><span id="vpn-notice-text">Notice: Please connect VPN.</span></div>
+                <div id="ad-task-area"><div id="ad-task-loading" style="text-align: center; padding: 20px;"><div class="spinner" style="width:30px; height:30px; border:3px solid var(--primary-color); border-top-color:transparent; border-radius:50%; animation:spin 1s linear infinite; margin:0 auto;"></div><p style="margin-top:10px; font-size:0.9rem;">Checking connection...</p></div></div>
             </div>
-
-            <!-- BONUS TASK PAGE -->
             <div id="bonus-page" class="page">
-                <div class="bonus-header-card">
-                    <h3><i class="fas fa-gift"></i> Special Tasks</h3>
-                    <p>Complete these tasks to earn bonus rewards directly to your main balance.</p>
-                </div>
-                <h3 style="margin: 20px 0 10px 0;">Available Bonuses</h3>
-                <div id="dynamic-tasks-container"></div>
+                <div class="bonus-header-card"><h3><i class="fas fa-gift"></i> Special Tasks</h3><p>Complete these tasks to earn bonus rewards directly to your main balance.</p></div>
+                <h3 style="margin: 20px 0 10px 0;">Available Bonuses</h3><div id="dynamic-tasks-container"></div>
             </div>
-
-            <!-- LEADERBOARD PAGE -->
             <div id="leaderboard-page" class="page">
                 <h2>Leaderboard</h2>
-                <div class="leaderboard-toggle">
-                    <button class="toggle-btn active" data-board="referral">Top Referrers</button>
-                    <button class="toggle-btn" data-board="earning">Top Earners</button>
-                </div>
+                <div class="leaderboard-toggle"><button class="toggle-btn active" data-board="referral">Top Referrers</button><button class="toggle-btn" data-board="earning">Top Earners</button></div>
                 <div id="referral-board"><ul class="leaderboard-list" id="referral-leaderboard-list"></ul></div>
                 <div id="earning-board" style="display: none;"><ul class="leaderboard-list" id="earning-leaderboard-list"></ul></div>
             </div>
-
-            <!-- PROFILE PAGE -->
             <div id="profile-page" class="page">
                 <div id="referral-section"></div><div id="withdraw-section"></div>
-                <div id="withdrawal-history-section" style="margin-top: 20px;">
-                    <h2>Withdrawal History</h2><div id="withdrawal-history-list"></div>
-                </div>
+                <div id="withdrawal-history-section" style="margin-top: 20px;"><h2>Withdrawal History</h2><div id="withdrawal-history-list"></div></div>
             </div>
         </main>
-        
         <nav class="bottom-nav">
             <button class="nav-btn active" data-page="home-page"><i class="fas fa-home"></i><span>Home</span></button>
             <button class="nav-btn" data-page="tasks-page"><i class="fas fa-tasks"></i><span>Tasks</span></button>
@@ -337,11 +205,9 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    
     <script>
     document.addEventListener('DOMContentLoaded', () => {
         const tg = window.Telegram.WebApp;
-        
         const firebaseConfig = {
           apiKey: "AIzaSyDJPs6pXv2k_wTCNWHqsr5exFkvOMeIX40",
           authDomain: "orange-leamon-bot.firebaseapp.com",
@@ -351,566 +217,145 @@
           messagingSenderId: "440970951072",
           appId: "1:440970951072:web:6cf46f7720d260047c4cc5"
         };
-        
-        let appConfig = {}; let userState = {}; let tgUser = {};
-        let leaderboardData = { referral: [], earning: [] };
-        let userTransactions = [];
-        let userLocationData = null; // Store user location
-
-        const popup = document.getElementById('popup');
-        const popupBody = document.getElementById('popup-body');
-        const loadingProgress = document.getElementById('loading-progress');
-
+        let appConfig = {}; let userState = {}; let tgUser = {}; let leaderboardData = { referral: [], earning: [] }; let userTransactions = []; let userLocationData = null;
+        const popup = document.getElementById('popup'); const popupBody = document.getElementById('popup-body'); const loadingProgress = document.getElementById('loading-progress');
         const showPopup = (content) => { popupBody.innerHTML = content; popup.style.display = 'flex'; };
         const closePopup = () => { popup.style.display = 'none'; };
         const updateProgress = (percentage) => { loadingProgress.textContent = `${percentage}%`; };
-
         const loadAdSdk = (zoneId) => {
-            if (!zoneId) return;
-            if (document.querySelector(`script[data-zone='${zoneId}']`)) return;
-            const script = document.createElement('script');
-            script.src = `//libtl.com/sdk.js`;
-            script.setAttribute('data-zone', zoneId);
-            script.setAttribute('data-sdk', `show_${zoneId}`);
-            script.async = true;
-            document.body.appendChild(script);
+            if (!zoneId) return; if (document.querySelector(`script[data-zone='${zoneId}']`)) return;
+            const script = document.createElement('script'); script.src = `//libtl.com/sdk.js`; script.setAttribute('data-zone', zoneId); script.setAttribute('data-sdk', `show_${zoneId}`); script.async = true; document.body.appendChild(script);
         };
-
         const initApp = async () => {
-            tg.ready(); tg.expand();
-            document.body.className = `${tg.colorScheme}-theme`;
-            tgUser = tg.initDataUnsafe.user;
-            
-            if (!tgUser || !tgUser.id) { 
-                tgUser = { id: 123456, first_name: "Test", last_name: "User", username: "testuser", photo_url: "" };
-            }
-
+            tg.ready(); tg.expand(); document.body.className = `${tg.colorScheme}-theme`; tgUser = tg.initDataUnsafe.user;
+            if (!tgUser || !tgUser.id) { tgUser = { id: 123456, first_name: "Test", last_name: "User", username: "testuser", photo_url: "" }; }
             try {
-                updateProgress(10); firebase.initializeApp(firebaseConfig); const db = firebase.database();
-                updateProgress(20);
-                
-                const configSnapshot = await db.ref('config').once('value');
-                appConfig = configSnapshot.val() || {};
-                updateProgress(40);
-
-                await loadUserData(db); 
-                updateProgress(60);
-
-                // Start loading location in background if needed
-                if(appConfig.vpnRequired) {
-                    fetchUserLocation();
-                }
-
+                updateProgress(10); firebase.initializeApp(firebaseConfig); const db = firebase.database(); updateProgress(20);
+                const configSnapshot = await db.ref('config').once('value'); appConfig = configSnapshot.val() || {}; updateProgress(40);
+                await loadUserData(db); updateProgress(60);
+                // ONLINE STATUS LOGIC
+                const presenceRef = db.ref(`status/${tgUser.id}`);
+                presenceRef.onDisconnect().remove();
+                presenceRef.set(true);
+                if(appConfig.vpnRequired) { fetchUserLocation(); }
                 const referralBoardPromise = db.ref('users').orderByChild('referrals').limitToLast(10).once('value');
                 const earningBoardPromise = db.ref('users').orderByChild('totalEarned').limitToLast(10).once('value');
                 const historyPromise = loadTransactionHistory(db);
-
                 const [referralBoardSnap, earningBoardSnap] = await Promise.all([referralBoardPromise, earningBoardPromise, historyPromise]);
                 updateProgress(80);
-
                 referralBoardSnap.forEach(child => { leaderboardData.referral.push(child.val()); });
                 earningBoardSnap.forEach(child => { leaderboardData.earning.push(child.val()); });
-                leaderboardData.referral.reverse(); leaderboardData.earning.reverse();
-                updateProgress(90);
-
+                leaderboardData.referral.reverse(); leaderboardData.earning.reverse(); updateProgress(90);
                 if(appConfig.adZoneId) loadAdSdk(appConfig.adZoneId);
-                
-                renderUI(); setupNavigation(); setupEventListeners();
-                updateProgress(100);
-
+                renderUI(); setupNavigation(); setupEventListeners(); updateProgress(100);
                 setTimeout(() => {
-                    document.getElementById('app-loader').style.display = 'none';
-                    document.getElementById('app').style.display = 'block';
-                    if (appConfig.welcomeMessage && !userState.welcomed) {
-                        showPopup(`<h2>Welcome!</h2><p>${appConfig.welcomeMessage}</p><button class="popup-close-btn">Continue</button>`);
-                        db.ref(`users/${tgUser.id}/welcomed`).set(true);
-                    }
+                    document.getElementById('app-loader').style.display = 'none'; document.getElementById('app').style.display = 'block';
+                    if (appConfig.welcomeMessage && !userState.welcomed) { showPopup(`<h2>Welcome!</h2><p>${appConfig.welcomeMessage}</p><button class="popup-close-btn">Continue</button>`); db.ref(`users/${tgUser.id}/welcomed`).set(true); }
                 }, 300);
             } catch (error) { console.error("Init failed:", error); tg.showAlert("Failed to load app data."); }
         };
-
         const loadUserData = async (db) => {
-            const userRef = db.ref(`users/${tgUser.id}`);
-            const snapshot = await userRef.once('value');
-            let userData = snapshot.val();
-            
+            const userRef = db.ref(`users/${tgUser.id}`); const snapshot = await userRef.once('value'); let userData = snapshot.val();
             if (!userData) {
-                const startParam = tg.initDataUnsafe.start_param;
-                const referralId = (startParam && !isNaN(startParam)) ? startParam : null;
-                userData = { id: tgUser.id, firstName: tgUser.first_name || '', lastName: tgUser.last_name || '', username: tgUser.username || '', photoUrl: tgUser.photo_url || '', balance: 0, referrals: 0, referredBy: referralId, totalEarned: 0, lifetimeAdCount: 0, lastAdWatchDate: '1970-01-01', dailyAdCount: 0, breakUntil: 0, completedTasks: {}, welcomed: false };
+                const startParam = tg.initDataUnsafe.start_param; const referralId = (startParam && !isNaN(startParam)) ? startParam : null;
+                userData = { id: tgUser.id, firstName: tgUser.first_name || '', lastName: tgUser.last_name || '', username: tgUser.username || '', photoUrl: tgUser.photo_url || '', balance: 0, referrals: 0, referredBy: referralId, totalEarned: 0, lifetimeAdCount: 0, lastAdWatchDate: '1970-01-01', dailyAdCount: 0, breakUntil: 0, completedTasks: {}, welcomed: false, joinedAt: Date.now() };
                 await userRef.set(userData);
                 if (referralId && referralId != tgUser.id) {
-                    const referrerRef = db.ref(`users/${referralId}`);
-                    const bonusAmount = parseFloat(appConfig.referralBonus || 0);
-                    if (bonusAmount > 0) {
-                        await referrerRef.transaction(currentData => {
-                            if (currentData) { currentData.balance = (currentData.balance || 0) + bonusAmount; currentData.referrals = (currentData.referrals || 0) + 1; }
-                            return currentData;
-                        });
-                    } else { await referrerRef.child('referrals').set(firebase.database.ServerValue.increment(1)); }
+                    const referrerRef = db.ref(`users/${referralId}`); const bonusAmount = parseFloat(appConfig.referralBonus || 0);
+                    if (bonusAmount > 0) { await referrerRef.transaction(currentData => { if (currentData) { currentData.balance = (currentData.balance || 0) + bonusAmount; currentData.referrals = (currentData.referrals || 0) + 1; } return currentData; }); } else { await referrerRef.child('referrals').set(firebase.database.ServerValue.increment(1)); }
                 }
             }
             const today = new Date().toISOString().slice(0, 10);
-            if (userData.lastAdWatchDate !== today) {
-                userData.dailyAdCount = 0; userData.lastAdWatchDate = today;
-                await userRef.update({ dailyAdCount: 0, lastAdWatchDate: today });
-            }
+            if (userData.lastAdWatchDate !== today) { userData.dailyAdCount = 0; userData.lastAdWatchDate = today; await userRef.update({ dailyAdCount: 0, lastAdWatchDate: today }); }
             userState = userData;
         };
-        
-        const loadTransactionHistory = async (db) => {
-            userTransactions = []; 
-            const statuses = ['pending', 'completed', 'rejected'];
-            const historyPromises = statuses.map(status => db.ref(`withdrawals/${status}`).orderByChild('userId').equalTo(tgUser.id).once('value'));
-            const snapshots = await Promise.all(historyPromises);
-            snapshots.forEach(snap => { snap.forEach(childSnap => { userTransactions.push(childSnap.val()); }); });
-            userTransactions.sort((a, b) => b.timestamp - a.timestamp);
-        };
-
-        // --- FIXED: Added the missing function ---
+        const loadTransactionHistory = async (db) => { userTransactions = []; const statuses = ['pending', 'completed', 'rejected']; const historyPromises = statuses.map(status => db.ref(`withdrawals/${status}`).orderByChild('userId').equalTo(tgUser.id).once('value')); const snapshots = await Promise.all(historyPromises); snapshots.forEach(snap => { snap.forEach(childSnap => { userTransactions.push(childSnap.val()); }); }); userTransactions.sort((a, b) => b.timestamp - a.timestamp); };
         const renderWithdrawalHistory = () => {
-            const listEl = document.getElementById('withdrawal-history-list');
-            if (userTransactions.length === 0) { 
-                listEl.innerHTML = '<p style="text-align:center; opacity:0.6;">No withdrawal history found.</p>'; 
-                return; 
-            }
-            listEl.innerHTML = userTransactions.map(item => `
-                <div class="history-item">
-                    <div class="history-details">
-                        <p>${item.amount.toFixed(2)} TK - ${item.method}</p>
-                        <small>${new Date(item.timestamp).toLocaleString()}</small>
-                    </div>
-                    <span class="history-status status-${item.status}">${item.status}</span>
-                </div>`).join('');
+            const listEl = document.getElementById('withdrawal-history-list'); if (userTransactions.length === 0) { listEl.innerHTML = '<p style="text-align:center; opacity:0.6;">No withdrawal history found.</p>'; return; }
+            listEl.innerHTML = userTransactions.map(item => `<div class="history-item"><div class="history-details"><p>${item.amount.toFixed(2)} TK - ${item.method}</p><small>${new Date(item.timestamp).toLocaleString()}</small></div><span class="history-status status-${item.status}">${item.status}</span></div>`).join('');
         };
-
-        // Fetch User Location (Free API)
-        const fetchUserLocation = async () => {
-            try {
-                // Using ipwho.is (Free)
-                const response = await fetch('https://ipwho.is/');
-                userLocationData = await response.json();
-                renderUI(); // Re-render to update connection status text
-            } catch (error) {
-                console.error("Loc fetch error:", error);
-                userLocationData = { success: false }; // Fail safe
-                renderUI();
-            }
-        };
-
+        const fetchUserLocation = async () => { try { const response = await fetch('https://ipwho.is/'); userLocationData = await response.json(); renderUI(); } catch (error) { console.error("Loc fetch error:", error); userLocationData = { success: false }; renderUI(); } };
         const renderUI = () => {
-            document.getElementById('user-photo').src = userState.photoUrl || 'https://via.placeholder.com/80';
-            document.getElementById('user-name').textContent = `${userState.firstName} ${userState.lastName}`;
-            document.getElementById('user-balance').textContent = (userState.balance || 0).toFixed(2);
-            document.getElementById('daily-ads-watched').textContent = `${userState.dailyAdCount || 0} / ${appConfig.dailyAdLimit || 0}`;
-            document.getElementById('referral-count').textContent = userState.referrals || 0;
-            document.getElementById('total-ads-watched').textContent = userState.lifetimeAdCount || 0;
-            document.getElementById('total-earned').textContent = (userState.totalEarned || 0).toFixed(2);
-            
-            // --- NEW: Update Daily Goal Card ---
-            const dailyLimit = appConfig.dailyAdLimit || 1;
-            const watched = userState.dailyAdCount || 0;
-            const percent = Math.min((watched / dailyLimit) * 100, 100);
-            
-            // Check if elements exist before updating
-            if(document.getElementById('goal-current')) {
-                document.getElementById('goal-current').textContent = watched;
-                document.getElementById('goal-total').textContent = dailyLimit;
-                document.getElementById('goal-progress-fill').style.width = `${percent}%`;
-                
-                // Connection status text update
-                const statusText = document.getElementById('connection-status-text');
-                if(appConfig.vpnRequired) {
-                     if(userLocationData && userLocationData.success) {
-                         statusText.textContent = `Connected: ${userLocationData.country}`;
-                         statusText.style.color = 'var(--success)';
-                     } else {
-                         statusText.textContent = 'Checking connection...';
-                         statusText.style.color = 'var(--pending)';
-                     }
-                } else {
-                    statusText.textContent = 'Active';
-                }
-            }
-            
-            // VPN Notice Logic
-            const noticeBox = document.getElementById('vpn-notice-board');
-            if (appConfig.vpnNotice) {
-                noticeBox.style.display = 'flex';
-                document.getElementById('vpn-notice-text').textContent = appConfig.vpnNotice;
-            } else {
-                noticeBox.style.display = 'none';
-            }
-
-            renderAdTask(); 
-            renderDynamicTasks(); 
-            renderReferralSection(); 
-            renderWithdrawSection(); 
-            renderEarningsGraph(); 
-            renderDynamicLinks();
+            document.getElementById('user-photo').src = userState.photoUrl || 'https://via.placeholder.com/80'; document.getElementById('user-name').textContent = `${userState.firstName} ${userState.lastName}`; document.getElementById('user-balance').textContent = (userState.balance || 0).toFixed(2);
+            document.getElementById('daily-ads-watched').textContent = `${userState.dailyAdCount || 0} / ${appConfig.dailyAdLimit || 0}`; document.getElementById('referral-count').textContent = userState.referrals || 0; document.getElementById('total-ads-watched').textContent = userState.lifetimeAdCount || 0; document.getElementById('total-earned').textContent = (userState.totalEarned || 0).toFixed(2);
+            const dailyLimit = appConfig.dailyAdLimit || 1; const watched = userState.dailyAdCount || 0; const percent = Math.min((watched / dailyLimit) * 100, 100);
+            if(document.getElementById('goal-current')) { document.getElementById('goal-current').textContent = watched; document.getElementById('goal-total').textContent = dailyLimit; document.getElementById('goal-progress-fill').style.width = `${percent}%`; const statusText = document.getElementById('connection-status-text'); if(appConfig.vpnRequired) { if(userLocationData && userLocationData.success) { statusText.textContent = `Connected: ${userLocationData.country}`; statusText.style.color = 'var(--success)'; } else { statusText.textContent = 'Checking connection...'; statusText.style.color = 'var(--pending)'; } } else { statusText.textContent = 'Active'; } }
+            const noticeBox = document.getElementById('vpn-notice-board'); if (appConfig.vpnNotice) { noticeBox.style.display = 'flex'; document.getElementById('vpn-notice-text').textContent = appConfig.vpnNotice; } else { noticeBox.style.display = 'none'; }
+            renderAdTask(); renderDynamicTasks(); renderReferralSection(); renderWithdrawSection(); renderEarningsGraph(); renderDynamicLinks();
         };
-
         const renderAdTask = () => {
-            const container = document.getElementById('ad-task-area');
-            const now = Date.now();
-            const onBreak = userState.breakUntil && now < userState.breakUntil;
-            const limitReached = userState.dailyAdCount >= appConfig.dailyAdLimit;
-            
-            // Check VPN Requirement
+            const container = document.getElementById('ad-task-area'); const now = Date.now(); const onBreak = userState.breakUntil && now < userState.breakUntil; const limitReached = userState.dailyAdCount >= appConfig.dailyAdLimit;
             if (appConfig.vpnRequired) {
-                if (!userLocationData) {
-                    // Still loading location
-                    container.innerHTML = `<div id="ad-task-loading" style="text-align: center; padding: 20px;"><div class="spinner" style="width:30px; height:30px; border:3px solid var(--primary-color); border-top-color:transparent; border-radius:50%; animation:spin 1s linear infinite; margin:0 auto;"></div><p style="margin-top:10px; font-size:0.9rem;">Checking connection...</p></div>`;
-                    return;
-                }
-
-                const allowedCountries = (appConfig.allowedCountries || "United States, United Kingdom, Canada, Australia").split(',').map(c => c.trim().toLowerCase());
-                const userCountry = (userLocationData.country || "").toLowerCase();
-                const isAllowed = userLocationData.success && allowedCountries.includes(userCountry);
-
-                if (!isAllowed) {
-                    // Show Restricted Card
-                    const allowedStr = (appConfig.allowedCountries || "US, UK, CA, AU");
-                    container.innerHTML = `
-                        <div class="vpn-restricted-card">
-                            <div class="vpn-icon-container">
-                                <span class="vpn-alert-badge">!</span>
-                                <i class="fas fa-wifi" style="position: relative;"><div style="position:absolute; width:100%; height:2px; background:currentColor; top:50%; left:0; transform:rotate(-45deg);"></div></i>
-                            </div>
-                            <h2 class="vpn-title">Access Restricted</h2>
-                            <p class="vpn-subtitle">This section requires a connection to:</p>
-                            <div class="allowed-countries-tag">${allowedStr}</div>
-                            <button class="retry-btn" onclick="window.retryLocationCheck()">
-                                <i class="fas fa-wifi"></i> Retry Connection
-                            </button>
-                        </div>
-                    `;
-                    return;
-                }
+                if (!userLocationData) { container.innerHTML = `<div id="ad-task-loading" style="text-align: center; padding: 20px;"><div class="spinner" style="width:30px; height:30px; border:3px solid var(--primary-color); border-top-color:transparent; border-radius:50%; animation:spin 1s linear infinite; margin:0 auto;"></div><p style="margin-top:10px; font-size:0.9rem;">Checking connection...</p></div>`; return; }
+                const allowedCountries = (appConfig.allowedCountries || "United States, United Kingdom, Canada, Australia").split(',').map(c => c.trim().toLowerCase()); const userCountry = (userLocationData.country || "").toLowerCase(); const isAllowed = userLocationData.success && allowedCountries.includes(userCountry);
+                if (!isAllowed) { const allowedStr = (appConfig.allowedCountries || "US, UK, CA, AU"); container.innerHTML = `<div class="vpn-restricted-card"><div class="vpn-icon-container"><span class="vpn-alert-badge">!</span><i class="fas fa-wifi" style="position: relative;"><div style="position:absolute; width:100%; height:2px; background:currentColor; top:50%; left:0; transform:rotate(-45deg);"></div></i></div><h2 class="vpn-title">Access Restricted</h2><p class="vpn-subtitle">This section requires a connection to:</p><div class="allowed-countries-tag">${allowedStr}</div><button class="retry-btn" onclick="window.retryLocationCheck()"><i class="fas fa-wifi"></i> Retry Connection</button></div>`; return; }
             }
-
-            // Normal Task Logic
-            let html = '';
-            if (onBreak) {
-                const remaining = Math.ceil((userState.breakUntil - now) / 60000);
-                html = `<div class="task-container"><img class="task-icon-img" src="https://img.icons8.com/ios-filled/100/hourglass.png" alt="icon"><div class="task-info"><h3>Break Time!</h3><p>Please wait for ${remaining} more minutes.</p></div><button class="action-btn" disabled>Waiting</button></div>`;
-            } else if (limitReached) {
-                html = `<div class="task-container"><img class="task-icon-img" src="https://img.icons8.com/ios-filled/100/stop-circled.png" alt="icon"><div class="task-info"><h3>Daily Limit Reached</h3><p>Come back tomorrow for more ads.</p></div><button class="action-btn" disabled>Limit</button></div>`;
-            } else {
-                html = `<div class="task-container"><img class="task-icon-img" src="https://img.icons8.com/ios-filled/100/play-button-circled.png" alt="icon"><div class="task-info"><h3>Watch a Rewarded Ad</h3><p>Earn ${appConfig.adValue || 0} TK for every ad.</p></div><button id="watch-ad-btn" class="action-btn">Watch Ad</button></div>`;
-            }
-            container.innerHTML = html;
-            if (!onBreak && !limitReached) { document.getElementById('watch-ad-btn').addEventListener('click', handleWatchAd); }
+            let html = ''; if (onBreak) { const remaining = Math.ceil((userState.breakUntil - now) / 60000); html = `<div class="task-container"><img class="task-icon-img" src="https://img.icons8.com/ios-filled/100/hourglass.png" alt="icon"><div class="task-info"><h3>Break Time!</h3><p>Please wait for ${remaining} more minutes.</p></div><button class="action-btn" disabled>Waiting</button></div>`; } else if (limitReached) { html = `<div class="task-container"><img class="task-icon-img" src="https://img.icons8.com/ios-filled/100/stop-circled.png" alt="icon"><div class="task-info"><h3>Daily Limit Reached</h3><p>Come back tomorrow for more ads.</p></div><button class="action-btn" disabled>Limit</button></div>`; } else { html = `<div class="task-container"><img class="task-icon-img" src="https://img.icons8.com/ios-filled/100/play-button-circled.png" alt="icon"><div class="task-info"><h3>Watch a Rewarded Ad</h3><p>Earn ${appConfig.adValue || 0} TK for every ad.</p></div><button id="watch-ad-btn" class="action-btn">Watch Ad</button></div>`; }
+            container.innerHTML = html; if (!onBreak && !limitReached) { document.getElementById('watch-ad-btn').addEventListener('click', handleWatchAd); }
         };
-        
-        window.retryLocationCheck = () => {
-            userLocationData = null;
-            renderAdTask();
-            fetchUserLocation();
-        };
-        
+        window.retryLocationCheck = () => { userLocationData = null; renderAdTask(); fetchUserLocation(); };
         const renderEarningsGraph = async () => {
-             const chartEl = document.getElementById('earnings-chart'); const labelsEl = document.getElementById('earnings-chart-labels');
-            chartEl.innerHTML = ''; labelsEl.innerHTML = '';
-            const today = new Date(); const dates = [];
-            for (let i = 6; i >= 0; i--) { const date = new Date(today); date.setDate(today.getDate() - i); dates.push(date.toISOString().slice(0, 10)); }
-            const earningsPromises = dates.map(date => firebase.database().ref(`userEarnings/${tgUser.id}/${date}`).once('value'));
-            const snapshots = await Promise.all(earningsPromises);
-            const earningsData = snapshots.map(snap => snap.val() || 0);
-            const maxEarning = Math.max(...earningsData, 1);
-            earningsData.forEach((earning, index) => {
-                const height = (earning / maxEarning) * 100;
-                const dateLabel = new Date(dates[index]).toLocaleDateString('en-US', { day: 'numeric' });
-                chartEl.innerHTML += `<div class="bar" style="height: ${height}%;"><span class="tooltip">${earning.toFixed(2)} TK</span></div>`;
-                labelsEl.innerHTML += `<span>${dateLabel}</span>`;
-            });
+             const chartEl = document.getElementById('earnings-chart'); const labelsEl = document.getElementById('earnings-chart-labels'); chartEl.innerHTML = ''; labelsEl.innerHTML = '';
+            const today = new Date(); const dates = []; for (let i = 6; i >= 0; i--) { const date = new Date(today); date.setDate(today.getDate() - i); dates.push(date.toISOString().slice(0, 10)); }
+            const earningsPromises = dates.map(date => firebase.database().ref(`userEarnings/${tgUser.id}/${date}`).once('value')); const snapshots = await Promise.all(earningsPromises); const earningsData = snapshots.map(snap => snap.val() || 0); const maxEarning = Math.max(...earningsData, 1);
+            earningsData.forEach((earning, index) => { const height = (earning / maxEarning) * 100; const dateLabel = new Date(dates[index]).toLocaleDateString('en-US', { day: 'numeric' }); chartEl.innerHTML += `<div class="bar" style="height: ${height}%;"><span class="tooltip">${earning.toFixed(2)} TK</span></div>`; labelsEl.innerHTML += `<span>${dateLabel}</span>`; });
         };
-        
         const handleWatchAd = async () => {
             if (userState.dailyAdCount >= appConfig.dailyAdLimit) { tg.showAlert("Daily limit reached."); return; }
-            
-            const now = Date.now();
-            if (userState.breakUntil && now < userState.breakUntil) {
-                const remaining = Math.ceil((userState.breakUntil - now) / 60000);
-                tg.showAlert(`Wait ${remaining} mins.`); return;
-            }
-            
-            const adFunction = window['show_' + appConfig.adZoneId];
-            if (typeof adFunction !== 'function') {
-                tg.showAlert("Ad not ready."); return;
-            }
-
+            const now = Date.now(); if (userState.breakUntil && now < userState.breakUntil) { const remaining = Math.ceil((userState.breakUntil - now) / 60000); tg.showAlert(`Wait ${remaining} mins.`); return; }
+            const adFunction = window['show_' + appConfig.adZoneId]; if (typeof adFunction !== 'function') { tg.showAlert("Ad not ready."); return; }
             showPopup(`<div class="popup-loader"><div class="spinner"></div></div><h2>Loading Ad</h2>`);
-            
             try {
-                await adFunction();
-                closePopup();
-                const adValue = appConfig.adValue || 0;
-
-                // --- DIRECT BALANCE UPDATE ---
-                // 1. Update Local State
-                userState.balance = (userState.balance || 0) + adValue;
-                userState.dailyAdCount++;
-                userState.lifetimeAdCount++;
-                userState.totalEarned = (userState.totalEarned || 0) + adValue;
-
-                // 2. Update Firebase
-                const db = firebase.database(); 
-                const userRef = db.ref(`users/${tgUser.id}`);
-                const updates = {};
-                updates.balance = userState.balance; // সরাসরি ব্যালেন্স আপডেট
-                updates.dailyAdCount = userState.dailyAdCount;
-                updates.lifetimeAdCount = userState.lifetimeAdCount;
-                updates.totalEarned = userState.totalEarned;
-                
-                // Break Time Logic
-                if ((userState.dailyAdCount) % appConfig.adsPerBreak === 0 && appConfig.adsPerBreak > 0) {
-                    updates.breakUntil = Date.now() + (appConfig.breakDuration * 60000);
-                    userState.breakUntil = updates.breakUntil;
-                }
+                await adFunction(); closePopup(); const adValue = appConfig.adValue || 0;
+                userState.balance = (userState.balance || 0) + adValue; userState.dailyAdCount++; userState.lifetimeAdCount++; userState.totalEarned = (userState.totalEarned || 0) + adValue;
+                const db = firebase.database(); const userRef = db.ref(`users/${tgUser.id}`); const updates = {}; updates.balance = userState.balance; updates.dailyAdCount = userState.dailyAdCount; updates.lifetimeAdCount = userState.lifetimeAdCount; updates.totalEarned = userState.totalEarned;
+                if ((userState.dailyAdCount) % appConfig.adsPerBreak === 0 && appConfig.adsPerBreak > 0) { updates.breakUntil = Date.now() + (appConfig.breakDuration * 60000); userState.breakUntil = updates.breakUntil; }
                 await userRef.update(updates);
-                
-                // Stats
-                const today = new Date().toISOString().slice(0, 10);
-                await db.ref(`userEarnings/${tgUser.id}/${today}`).set(firebase.database.ServerValue.increment(adValue));
-
-                tg.HapticFeedback.notificationOccurred('success');
-                tg.showAlert(`+${adValue.toFixed(2)} TK added to Main Balance.`);
-                renderUI();
-
-            } catch (error) {
-                console.error("Ad failed:", error); closePopup(); tg.showAlert("Ad failed to load.");
-            }
+                const today = new Date().toISOString().slice(0, 10); await db.ref(`userEarnings/${tgUser.id}/${today}`).set(firebase.database.ServerValue.increment(adValue));
+                tg.HapticFeedback.notificationOccurred('success'); tg.showAlert(`+${adValue.toFixed(2)} TK added to Main Balance.`); renderUI();
+            } catch (error) { console.error("Ad failed:", error); closePopup(); tg.showAlert("Ad failed to load."); }
         };
-
-        const setupNavigation = () => {
-            const navButtons = document.querySelectorAll('.nav-btn'); const pages = document.querySelectorAll('.page');
-            navButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const pageId = button.dataset.page;
-                    pages.forEach(page => page.classList.remove('active'));
-                    document.getElementById(pageId).classList.add('active');
-                    navButtons.forEach(btn => btn.classList.remove('active'));
-                    button.classList.add('active');
-                    if (pageId === 'tasks-page' && appConfig.vpnRequired) { renderAdTask(); fetchUserLocation(); }
-                    if (pageId === 'profile-page') { renderWithdrawalHistory(); }
-                    if (pageId === 'leaderboard-page') { renderLeaderboard(); }
-                });
-            });
-        };
-        
-        const setupEventListeners = () => {
-            popup.addEventListener('click', (e) => { if (e.target.classList.contains('popup-close-btn') || e.target.id === 'popup') closePopup(); });
-            document.querySelector('.leaderboard-toggle').addEventListener('click', (e) => {
-                if(e.target.classList.contains('toggle-btn')) {
-                    document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
-                    e.target.classList.add('active');
-                    renderLeaderboard();
-                }
-            });
-            document.getElementById('dynamic-tasks-container').addEventListener('click', (e) => handleClaimTask(e));
-            document.getElementById('profile-page').addEventListener('submit', (e) => handleWithdraw(e));
-            document.getElementById('referral-section').addEventListener('click', (e) => { if(e.target.id === 'copy-ref-link-btn') copyReferralLink(); });
-        };
-
+        const setupNavigation = () => { const navButtons = document.querySelectorAll('.nav-btn'); const pages = document.querySelectorAll('.page'); navButtons.forEach(button => { button.addEventListener('click', () => { const pageId = button.dataset.page; pages.forEach(page => page.classList.remove('active')); document.getElementById(pageId).classList.add('active'); navButtons.forEach(btn => btn.classList.remove('active')); button.classList.add('active'); if (pageId === 'tasks-page' && appConfig.vpnRequired) { renderAdTask(); fetchUserLocation(); } if (pageId === 'profile-page') { renderWithdrawalHistory(); } if (pageId === 'leaderboard-page') { renderLeaderboard(); } }); }); };
+        const setupEventListeners = () => { popup.addEventListener('click', (e) => { if (e.target.classList.contains('popup-close-btn') || e.target.id === 'popup') closePopup(); }); document.querySelector('.leaderboard-toggle').addEventListener('click', (e) => { if(e.target.classList.contains('toggle-btn')) { document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active')); e.target.classList.add('active'); renderLeaderboard(); } }); document.getElementById('dynamic-tasks-container').addEventListener('click', (e) => handleClaimTask(e)); document.getElementById('profile-page').addEventListener('submit', (e) => handleWithdraw(e)); document.getElementById('referral-section').addEventListener('click', (e) => { if(e.target.id === 'copy-ref-link-btn') copyReferralLink(); }); };
         const handleClaimTask = async (e) => {
             if (e.target.classList.contains('action-btn') && e.target.dataset.taskId) {
-                const taskId = e.target.dataset.taskId;
-                const task = appConfig.tasks[taskId];
-                if (!task || (userState.completedTasks && userState.completedTasks[taskId])) { tg.showAlert('Already claimed.'); return; }
-                tg.openLink(e.target.dataset.taskUrl);
-                e.target.disabled = true; e.target.textContent = 'Claiming...';
-                setTimeout(async () => {
-                    try {
-                        const db = firebase.database(); const userRef = db.ref(`users/${tgUser.id}`);
-                        await userRef.child(`completedTasks/${taskId}`).set(true);
-                        await userRef.child('balance').set(firebase.database.ServerValue.increment(task.reward));
-                        userState.balance += task.reward;
-                        if (!userState.completedTasks) userState.completedTasks = {};
-                        userState.completedTasks[taskId] = true;
-                        tg.HapticFeedback.notificationOccurred('success');
-                        tg.showAlert(`Success! Received ${task.reward} TK.`);
-                        renderUI();
-                    } catch (error) { tg.showAlert('Failed to claim.'); e.target.disabled = false; e.target.textContent = 'Claim Bonus'; }
-                }, 5000);
+                const taskId = e.target.dataset.taskId; const task = appConfig.tasks[taskId]; if (!task || (userState.completedTasks && userState.completedTasks[taskId])) { tg.showAlert('Already claimed.'); return; }
+                tg.openLink(e.target.dataset.taskUrl); e.target.disabled = true; e.target.textContent = 'Claiming...';
+                setTimeout(async () => { try { const db = firebase.database(); const userRef = db.ref(`users/${tgUser.id}`); await userRef.child(`completedTasks/${taskId}`).set(true); await userRef.child('balance').set(firebase.database.ServerValue.increment(task.reward)); userState.balance += task.reward; if (!userState.completedTasks) userState.completedTasks = {}; userState.completedTasks[taskId] = true; tg.HapticFeedback.notificationOccurred('success'); tg.showAlert(`Success! Received ${task.reward} TK.`); renderUI(); } catch (error) { tg.showAlert('Failed to claim.'); e.target.disabled = false; e.target.textContent = 'Claim Bonus'; } }, 5000);
             }
         };
-
         const handleWithdraw = async (e) => {
-            if(e.target.id !== 'withdraw-form') return;
-            e.preventDefault();
-
-            const minRefsRequired = appConfig.minimumWithdrawReferrals || 0;
-            const userReferrals = userState.referrals || 0;
-            
-            if (minRefsRequired > 0 && userReferrals < minRefsRequired) {
-                tg.showAlert(`You need ${minRefsRequired} referrals. You have only ${userReferrals}.`);
-                return;
-            }
-
-            const methodEl = document.getElementById('withdraw-method');
-            const accountNumber = document.getElementById('account-number').value;
-            const amount = parseFloat(document.getElementById('amount').value);
-            const selectedMethod = appConfig.withdrawMethods.find(m => m.name === methodEl.value);
-            
-            if (isNaN(amount) || amount <= 0) { tg.showAlert("Invalid amount."); return; }
-            if (!selectedMethod) { tg.showAlert("Invalid method."); return; }
-            if (amount < selectedMethod.min) { tg.showAlert(`Min withdraw ${selectedMethod.min} TK.`); return; }
-            if (amount > userState.balance) { tg.showAlert("Insufficient balance."); return; }
-            
-            const btn = document.getElementById('withdraw-submit-btn'); 
-            btn.disabled = true; 
-            btn.textContent = 'Submitting...';
-            
+            if(e.target.id !== 'withdraw-form') return; e.preventDefault();
+            const minRefsRequired = appConfig.minimumWithdrawReferrals || 0; const userReferrals = userState.referrals || 0; if (minRefsRequired > 0 && userReferrals < minRefsRequired) { tg.showAlert(`You need ${minRefsRequired} referrals. You have only ${userReferrals}.`); return; }
+            const methodEl = document.getElementById('withdraw-method'); const accountNumber = document.getElementById('account-number').value; const amount = parseFloat(document.getElementById('amount').value); const selectedMethod = appConfig.withdrawMethods.find(m => m.name === methodEl.value);
+            if (isNaN(amount) || amount <= 0) { tg.showAlert("Invalid amount."); return; } if (!selectedMethod) { tg.showAlert("Invalid method."); return; } if (amount < selectedMethod.min) { tg.showAlert(`Min withdraw ${selectedMethod.min} TK.`); return; } if (amount > userState.balance) { tg.showAlert("Insufficient balance."); return; }
+            const btn = document.getElementById('withdraw-submit-btn'); btn.disabled = true; btn.textContent = 'Submitting...';
             const db = firebase.database();
             try {
-                const userRef = db.ref(`users/${tgUser.id}`);
-                
-                // ১. UI ব্যালেন্স আপডেট
-                userState.balance -= amount;
-                renderUI(); 
-                
-                // ২. ডেটাবেস ব্যালেন্স আপডেট
-                await userRef.child('balance').set(firebase.database.ServerValue.increment(-amount));
-                
-                const reqId = db.ref('withdrawals/pending').push().key;
-                const newRequest = { 
-                    id: reqId, 
-                    userId: tgUser.id, 
-                    userName: `${userState.firstName} ${userState.lastName}`, 
-                    method: selectedMethod.name, 
-                    account: accountNumber, 
-                    amount: amount, 
-                    status: 'pending', 
-                    timestamp: firebase.database.ServerValue.TIMESTAMP 
-                };
-                
-                await db.ref(`withdrawals/pending/${reqId}`).set(newRequest);
-                userTransactions.unshift(newRequest);
-                renderWithdrawalHistory(); 
-                
-                tg.HapticFeedback.notificationOccurred('success');
-                tg.showAlert("Request submitted!");
-                document.getElementById('withdraw-form').reset();
-                
-            } catch (error) {
-                console.error("WITHDRAW ERROR:", error);
-                
-                // রিভার্ট করা
-                userState.balance += amount;
-                tg.HapticFeedback.notificationOccurred('error'); 
-                tg.showAlert("Failed: " + error.message); 
-            } finally { 
-                renderUI(); 
-                // বাটন রিসেট না করে UI রি-রেন্ডার করাটাই শ্রেয়
-                btn.disabled = false;
-                btn.textContent = 'Submit Request';
-            }
+                const userRef = db.ref(`users/${tgUser.id}`); userState.balance -= amount; renderUI(); await userRef.child('balance').set(firebase.database.ServerValue.increment(-amount));
+                const reqId = db.ref('withdrawals/pending').push().key; const newRequest = { id: reqId, userId: tgUser.id, userName: `${userState.firstName} ${userState.lastName}`, method: selectedMethod.name, account: accountNumber, amount: amount, status: 'pending', timestamp: firebase.database.ServerValue.TIMESTAMP };
+                await db.ref(`withdrawals/pending/${reqId}`).set(newRequest); userTransactions.unshift(newRequest); renderWithdrawalHistory(); tg.HapticFeedback.notificationOccurred('success'); tg.showAlert("Request submitted!"); document.getElementById('withdraw-form').reset();
+            } catch (error) { console.error("WITHDRAW ERROR:", error); userState.balance += amount; tg.HapticFeedback.notificationOccurred('error'); tg.showAlert("Failed: " + error.message); } finally { renderUI(); btn.disabled = false; btn.textContent = 'Submit Request'; }
         };
-
-        const copyReferralLink = () => {
-            const refLinkInput = document.getElementById('referral-link');
-            refLinkInput.select(); refLinkInput.setSelectionRange(0, 99999);
-            try { navigator.clipboard.writeText(refLinkInput.value).then(() => { tg.HapticFeedback.notificationOccurred('success'); tg.showAlert("Copied!"); }); } catch (err) { document.execCommand('copy'); tg.HapticFeedback.notificationOccurred('success'); tg.showAlert("Copied!"); }
-        };
-
+        const copyReferralLink = () => { const refLinkInput = document.getElementById('referral-link'); refLinkInput.select(); refLinkInput.setSelectionRange(0, 99999); try { navigator.clipboard.writeText(refLinkInput.value).then(() => { tg.HapticFeedback.notificationOccurred('success'); tg.showAlert("Copied!"); }); } catch (err) { document.execCommand('copy'); tg.HapticFeedback.notificationOccurred('success'); tg.showAlert("Copied!"); } };
         const renderLeaderboard = () => {
-            const activeBoard = document.querySelector('.toggle-btn.active').dataset.board;
-            const listEl = document.getElementById(activeBoard === 'referral' ? 'referral-leaderboard-list' : 'earning-leaderboard-list');
-            const data = leaderboardData[activeBoard];
-            document.getElementById('referral-board').style.display = activeBoard === 'referral' ? 'block' : 'none';
-            document.getElementById('earning-board').style.display = activeBoard === 'earning' ? 'block' : 'none';
-            listEl.innerHTML = '';
+            const activeBoard = document.querySelector('.toggle-btn.active').dataset.board; const listEl = document.getElementById(activeBoard === 'referral' ? 'referral-leaderboard-list' : 'earning-leaderboard-list'); const data = leaderboardData[activeBoard];
+            document.getElementById('referral-board').style.display = activeBoard === 'referral' ? 'block' : 'none'; document.getElementById('earning-board').style.display = activeBoard === 'earning' ? 'block' : 'none'; listEl.innerHTML = '';
             if (data.length === 0) { listEl.innerHTML = '<li>No data.</li>'; return; }
-            data.forEach((user, index) => {
-                const score = activeBoard === 'referral' ? (user.referrals || 0) : (user.totalEarned || 0).toFixed(2);
-                const item = document.createElement('li'); item.className = 'leaderboard-item';
-                item.innerHTML = `<span class="rank">#${index + 1}</span><img src="${user.photoUrl || 'https://via.placeholder.com/40'}" alt="User"><span class="leaderboard-name">${user.firstName}</span><span class="leaderboard-score">${score}</span>`;
-                listEl.appendChild(item);
-            });
+            data.forEach((user, index) => { const score = activeBoard === 'referral' ? (user.referrals || 0) : (user.totalEarned || 0).toFixed(2); const item = document.createElement('li'); item.className = 'leaderboard-item'; item.innerHTML = `<span class="rank">#${index + 1}</span><img src="${user.photoUrl || 'https://via.placeholder.com/40'}" alt="User"><span class="leaderboard-name">${user.firstName}</span><span class="leaderboard-score">${score}</span>`; listEl.appendChild(item); });
         };
-
         const renderDynamicTasks = () => {
-            const container = document.getElementById('dynamic-tasks-container'); container.innerHTML = '';
-            if (appConfig.tasks) {
-                const tasks = [];
-                for(const key in appConfig.tasks) { tasks.push({key, ...appConfig.tasks[key]}); }
-                tasks.reverse();
-                tasks.forEach(task => {
-                    const isCompleted = userState.completedTasks && userState.completedTasks[task.key];
-                    const el = document.createElement('div'); el.className = 'task-container';
-                    el.innerHTML = `<img class="task-icon-img" src="${task.icon}" alt="icon"><div class="task-info"><h3>${task.name}</h3><p>Get ${task.reward} bonus TK.</p></div><button class="action-btn" data-task-id="${task.key}" data-task-url="${task.url}" ${isCompleted ? 'disabled' : ''}>${isCompleted ? 'Claimed' : 'Claim Bonus'}</button>`;
-                    container.appendChild(el);
-                });
-            }
+            const container = document.getElementById('dynamic-tasks-container'); container.innerHTML = ''; if (appConfig.tasks) { const tasks = []; for(const key in appConfig.tasks) { tasks.push({key, ...appConfig.tasks[key]}); } tasks.reverse(); tasks.forEach(task => { const isCompleted = userState.completedTasks && userState.completedTasks[task.key]; const el = document.createElement('div'); el.className = 'task-container'; el.innerHTML = `<img class="task-icon-img" src="${task.icon}" alt="icon"><div class="task-info"><h3>${task.name}</h3><p>Get ${task.reward} bonus TK.</p></div><button class="action-btn" data-task-id="${task.key}" data-task-url="${task.url}" ${isCompleted ? 'disabled' : ''}>${isCompleted ? 'Claimed' : 'Claim Bonus'}</button>`; container.appendChild(el); }); }
         };
-
-        const renderReferralSection = () => {
-            const container = document.getElementById('referral-section');
-            const refLink = `https://t.me/${appConfig.botUsername}/app?startapp=${tgUser.id}`;
-            container.innerHTML = `<div class="task-container" style="flex-direction: column; align-items: stretch;"><h3>Refer & Earn More!</h3><p>Invite friends and earn ${appConfig.referralBonus || 0} TK per referral.</p><input type="text" id="referral-link" value="${refLink}" readonly style="padding: 10px; text-align: center; border-radius: 8px; border: 1px dashed var(--primary-color); margin: 10px 0;"><button id="copy-ref-link-btn" class="action-btn">Copy Link</button></div>`;
-        };
-
-        // --- UPDATED: Render Withdraw Section with Referral Status ---
+        const renderReferralSection = () => { const container = document.getElementById('referral-section'); const refLink = `https://t.me/${appConfig.botUsername}/app?startapp=${tgUser.id}`; container.innerHTML = `<div class="task-container" style="flex-direction: column; align-items: stretch;"><h3>Refer & Earn More!</h3><p>Invite friends and earn ${appConfig.referralBonus || 0} TK per referral.</p><input type="text" id="referral-link" value="${refLink}" readonly style="padding: 10px; text-align: center; border-radius: 8px; border: 1px dashed var(--primary-color); margin: 10px 0;"><button id="copy-ref-link-btn" class="action-btn">Copy Link</button></div>`; };
         const renderWithdrawSection = () => {
-            const container = document.getElementById('withdraw-section'); let optionsHtml = '';
-            if (appConfig.withdrawMethods) { 
-                appConfig.withdrawMethods.forEach(method => { 
-                    optionsHtml += `<option value="${method.name}">${method.name} (Min: ${method.min} TK)</option>`; 
-                }); 
-            }
-            
-            const minRefs = appConfig.minimumWithdrawReferrals || 0;
-            const userRefs = userState.referrals || 0;
-            const isEligible = userRefs >= minRefs;
-            
-            let referralNotice = '';
-            if (minRefs > 0) {
-                const color = isEligible ? 'var(--success)' : 'var(--danger)';
-                const icon = isEligible ? '<i class="fas fa-check-circle"></i>' : '<i class="fas fa-times-circle"></i>';
-                referralNotice = `
-                    <div style="background: rgba(0,0,0,0.05); padding: 10px; border-radius: 8px; margin-bottom: 15px; border-left: 4px solid ${color};">
-                        <p style="font-size: 0.9rem; font-weight: 600; color: ${color}; margin-bottom: 5px;">
-                            ${icon} Referral Status: ${userRefs} / ${minRefs}
-                        </p>
-                        <p style="font-size: 0.8rem; opacity: 0.8;">
-                            ${isEligible ? 'You are eligible to withdraw!' : `You need ${minRefs - userRefs} more referrals to withdraw.`}
-                        </p>
-                    </div>
-                `;
-            }
-
-            // Disable button if not eligible
-            const disabledAttr = (minRefs > 0 && !isEligible) ? 'disabled' : '';
-            const btnStyle = (minRefs > 0 && !isEligible) ? 'background: #ccc; cursor: not-allowed;' : '';
-            const btnText = (minRefs > 0 && !isEligible) ? `Need ${minRefs} Referrals` : 'Submit Request';
-
-            container.innerHTML = `
-                <form id="withdraw-form" class="task-container" style="flex-direction: column; align-items: stretch;">
-                    <h3>Request Withdraw</h3>
-                    ${referralNotice}
-                    <div class="form-group" style="width:100%"><label for="withdraw-method">Method:</label><select id="withdraw-method" required style="width: 100%; padding: 10px; border-radius: 8px;">${optionsHtml}</select></div>
-                    <div class="form-group" style="width:100%"><label for="account-number">Account Number/ID:</label><input type="text" id="account-number" required style="width: 100%; padding: 10px; border-radius: 8px;"></div>
-                    <div class="form-group" style="width:100%"><label for="amount">Amount:</label><input type="number" step="any" id="amount" required style="width: 100%; padding: 10px; border-radius: 8px;"></div>
-                    <button type="submit" id="withdraw-submit-btn" class="action-btn" ${disabledAttr} style="${btnStyle}">${btnText}</button>
-                </form>
-            `;
+            const container = document.getElementById('withdraw-section'); let optionsHtml = ''; if (appConfig.withdrawMethods) { appConfig.withdrawMethods.forEach(method => { optionsHtml += `<option value="${method.name}">${method.name} (Min: ${method.min} TK)</option>`; }); }
+            const minRefs = appConfig.minimumWithdrawReferrals || 0; const userRefs = userState.referrals || 0; const isEligible = userRefs >= minRefs; let referralNotice = '';
+            if (minRefs > 0) { const color = isEligible ? 'var(--success)' : 'var(--danger)'; const icon = isEligible ? '<i class="fas fa-check-circle"></i>' : '<i class="fas fa-times-circle"></i>'; referralNotice = `<div style="background: rgba(0,0,0,0.05); padding: 10px; border-radius: 8px; margin-bottom: 15px; border-left: 4px solid ${color};"><p style="font-size: 0.9rem; font-weight: 600; color: ${color}; margin-bottom: 5px;">${icon} Referral Status: ${userRefs} / ${minRefs}</p><p style="font-size: 0.8rem; opacity: 0.8;">${isEligible ? 'You are eligible to withdraw!' : `You need ${minRefs - userRefs} more referrals to withdraw.`}</p></div>`; }
+            const disabledAttr = (minRefs > 0 && !isEligible) ? 'disabled' : ''; const btnStyle = (minRefs > 0 && !isEligible) ? 'background: #ccc; cursor: not-allowed;' : ''; const btnText = (minRefs > 0 && !isEligible) ? `Need ${minRefs} Referrals` : 'Submit Request';
+            container.innerHTML = `<form id="withdraw-form" class="task-container" style="flex-direction: column; align-items: stretch;"><h3>Request Withdraw</h3>${referralNotice}<div class="form-group" style="width:100%"><label for="withdraw-method">Method:</label><select id="withdraw-method" required style="width: 100%; padding: 10px; border-radius: 8px;">${optionsHtml}</select></div><div class="form-group" style="width:100%"><label for="account-number">Account Number/ID:</label><input type="text" id="account-number" required style="width: 100%; padding: 10px; border-radius: 8px;"></div><div class="form-group" style="width:100%"><label for="amount">Amount:</label><input type="number" step="any" id="amount" required style="width: 100%; padding: 10px; border-radius: 8px;"></div><button type="submit" id="withdraw-submit-btn" class="action-btn" ${disabledAttr} style="${btnStyle}">${btnText}</button></form>`;
         };
-
-        const renderDynamicLinks = () => {
-            const container = document.getElementById('dynamic-links-container'); container.innerHTML = '';
-            if (appConfig.links) {
-                const links = [];
-                for (const key in appConfig.links) { links.push({key, ...appConfig.links[key]}); }
-                links.reverse();
-                links.forEach(link => {
-                    const el = document.createElement('div'); el.className = 'task-container';
-                    el.innerHTML = `<img class="task-icon-img" src="${link.icon}" alt="icon"><div class="task-info"><h3>${link.name}</h3></div><button class="action-btn" onclick="window.Telegram.WebApp.openLink('${link.url}')">Visit</button>`;
-                    container.appendChild(el);
-                });
-            }
-        };
-
+        const renderDynamicLinks = () => { const container = document.getElementById('dynamic-links-container'); container.innerHTML = ''; if (appConfig.links) { const links = []; for (const key in appConfig.links) { links.push({key, ...appConfig.links[key]}); } links.reverse(); links.forEach(link => { const el = document.createElement('div'); el.className = 'task-container'; el.innerHTML = `<img class="task-icon-img" src="${link.icon}" alt="icon"><div class="task-info"><h3>${link.name}</h3></div><button class="action-btn" onclick="window.Telegram.WebApp.openLink('${link.url}')">Visit</button>`; container.appendChild(el); }); } };
         initApp();
     });
     </script>
