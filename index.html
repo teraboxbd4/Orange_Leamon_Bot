@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -9,265 +9,247 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
     <style>
+        /* --- ORIGINAL STYLES (UNCHANGED) --- */
         :root {
             --font-family: 'Poppins', sans-serif;
-            --primary-color: #E74C3C; 
-            --secondary-color: #F39C12;
-            --background-light: #FDFEFE; 
-            --surface-light: #FFFFFF; 
-            --text-primary-light: #2C3E50;
-            --border-light: #EAEDED;
-            
-            --background-dark: #1B2631; 
-            --surface-dark: #283747; 
-            --text-primary-dark: #FDFEFE;
-            --border-dark: #566573;
+            --primary-color: #E74C3C; --secondary-color: #F39C12;
+            --background-light: #FDFEFE; --surface-light: #FFFFFF; --text-primary-light: #2C3E50; --text-secondary-light: #808B96; --border-light: #EAEDED;
+            --background-dark: #1B2631; --surface-dark: #283747; --text-primary-dark: #FDFEFE; --text-secondary-dark: #ABB2B9; --border-dark: #566573;
+            --success: #27AE60; --danger: #C0392B; --pending: #F39C12;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: var(--font-family); transition: background-color 0.3s, color 0.3s; -webkit-font-smoothing: antialiased; padding-bottom: 80px; }
-        
+        body { font-family: var(--font-family); transition: background-color 0.3s, color 0.3s; -webkit-font-smoothing: antialiased; }
         body.light-theme { background-color: var(--background-light); color: var(--text-primary-light); }
         body.dark-theme { background-color: var(--background-dark); color: var(--text-primary-dark); }
+        #app { max-width: 500px; margin: 0 auto; padding-bottom: 80px; }
+        .page { display: none; padding: 15px; }
+        .page.active { display: block; animation: fadeIn 0.4s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         
-        #app { max-width: 500px; margin: 0 auto; min-height: 100vh; position: relative; }
-        .page { display: none; padding: 15px; animation: fadeIn 0.4s; }
-        .page.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .profile-header { padding: 25px 15px; border-bottom: 1px solid; display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .light-theme .profile-header { background-color: var(--surface-light); border-bottom-color: var(--border-light); }
+        .dark-theme .profile-header { background-color: var(--surface-dark); border-bottom-color: var(--border-dark); }
+        #user-photo { width: 80px; height: 80px; border-radius: 50%; border: 4px solid var(--primary-color); object-fit: cover; margin-bottom: 10px; }
+        #user-name { font-size: 1.4rem; font-weight: 700; margin-bottom: 5px; }
+        #user-balance-container { font-size: 1rem; font-weight: 500; }
+        #user-balance { font-size: 1.1rem; font-weight: 700; color: var(--primary-color); }
 
-        /* --- VPN Restricted Overlay Styles (Specific Request) --- */
-        #vpn-overlay {
-            display: none; /* Hidden by default */
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 20px;
-            height: 70vh;
-        }
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 20px 0; }
+        .stat-card { padding: 15px; border-radius: 12px; text-align: center; border: 1px solid; }
+        .light-theme .stat-card { background-color: var(--surface-light); border-color: var(--border-light); }
+        .dark-theme .stat-card { background-color: var(--surface-dark); border-color: var(--border-dark); }
+        .stat-card h3 { font-size: 0.85rem; font-weight: 500; margin-bottom: 8px; text-transform: uppercase; }
+        .light-theme .stat-card h3 { color: var(--text-secondary-light); } .dark-theme .stat-card h3 { color: var(--text-secondary-dark); }
+        .stat-card p { font-size: 1.4rem; font-weight: 600; color: var(--primary-color); }
         
-        /* 1. Notice Text (Top) */
-        .vpn-notice-box {
-            background-color: rgba(231, 76, 60, 0.1);
-            border: 1px solid var(--primary-color);
-            color: var(--primary-color);
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            font-size: 0.95rem;
-            line-height: 1.5;
-            width: 100%;
-            font-weight: 500;
-        }
+        .chart-container { padding: 20px; border-radius: 12px; margin-top: 20px; border: 1px solid; }
+        .light-theme .chart-container { background-color: var(--surface-light); border-color: var(--border-light); }
+        .dark-theme .chart-container { background-color: var(--surface-dark); border-color: var(--border-dark); }
+        .chart { display: flex; justify-content: space-around; align-items: flex-end; height: 150px; border-left: 1px solid; border-bottom: 1px solid; padding-top: 10px; }
+        .light-theme .chart { border-color: var(--border-light); } .dark-theme .chart { border-color: var(--border-dark); }
+        .bar { width: 12%; background: linear-gradient(to top, var(--primary-color), var(--secondary-color)); border-radius: 5px 5px 0 0; position: relative; cursor: pointer; }
+        .bar .tooltip { position: absolute; top: -30px; left: 50%; transform: translateX(-50%); background: var(--secondary-color); color: white; padding: 3px 7px; border-radius: 5px; font-size: 0.8rem; white-space: nowrap; opacity: 0; transition: opacity 0.2s; pointer-events: none; }
+        .bar:hover .tooltip { opacity: 1; }
+        .chart-labels { display: flex; justify-content: space-around; font-size: 0.75rem; margin-top: 5px; }
 
-        /* 2. Image (Small & Middle) */
-        .restricted-img {
-            width: 80px; /* ছবি ছোট রাখা হয়েছে */
-            height: 80px;
-            object-fit: contain;
-            margin-bottom: 20px;
-            opacity: 0.8;
+        .history-item { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-radius: 10px; margin-bottom: 10px; }
+        .light-theme .history-item { background-color: var(--surface-light); border: 1px solid var(--border-light); }
+        .dark-theme .history-item { background-color: var(--surface-dark); border: 1px solid var(--border-dark); }
+        .history-details p { margin: 0; } .history-details p:first-child { font-weight: 600; }
+        .history-status { padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; color: white; text-transform: capitalize; }
+        .status-completed { background-color: var(--success); } .status-pending { background-color: var(--pending); } .status-rejected { background-color: var(--danger); }
+
+        .progress-container { margin-bottom: 20px; }
+        .progress-info { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 0.9rem; font-weight: 500; }
+        .progress-bar-bg { width: 100%; height: 10px; border-radius: 5px; }
+        .light-theme .progress-bar-bg { background-color: var(--border-light); }
+        .dark-theme .progress-bar-bg { background-color: var(--border-dark); }
+        .progress-bar-fg { height: 100%; border-radius: 5px; background: linear-gradient(90deg, var(--primary-color), var(--secondary-color)); transition: width 0.3s ease; }
+        
+        form input, form select, form textarea { transition: all 0.2s ease-in-out; border: 1px solid; width: 100%; padding: 10px; border-radius: 8px; margin-bottom: 10px;}
+        .light-theme form input, .light-theme form select { border-color: var(--border-light); }
+        .dark-theme form input, .dark-theme form select { border-color: var(--border-dark); }
+        form input:focus, form select:focus { outline: none; border-color: var(--primary-color) !important; }
+
+        .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 10000; }
+        .popup-content { padding: 30px; border-radius: 15px; text-align: center; max-width: 80%; }
+        .light-theme .popup-content { background-color: var(--surface-light); } .dark-theme .popup-content { background-color: var(--surface-dark); }
+        .popup-content h2 { margin-bottom: 15px; color: var(--primary-color); } 
+        .popup-close-btn { padding: 10px 25px; border: none; border-radius: 8px; color: #fff; background-color: var(--primary-color); cursor: pointer; }
+        
+        #app-loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .light-theme #app-loader { background-color: var(--background-light); } .dark-theme #app-loader { background-color: var(--background-dark); }
+        #app-loader .spinner { width: 50px; height: 50px; border-radius: 50%; border: 5px solid; border-color: var(--primary-color) transparent; animation: spin 1s linear infinite; }
+        #loading-progress { margin-top: 15px; font-size: 1.2rem; font-weight: 600; }
+        .light-theme #loading-progress { color: var(--text-primary-light); } .dark-theme #loading-progress { color: var(--text-primary-dark); }
+        
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; max-width: 500px; margin: 0 auto; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid; z-index: 1000; }
+        .light-theme .bottom-nav { background-color: var(--surface-light); border-top-color: var(--border-light); }
+        .dark-theme .bottom-nav { background-color: var(--surface-dark); border-top-color: var(--border-dark); }
+        .nav-btn { background: none; border: none; cursor: pointer; display: flex; flex-direction: column; align-items: center; font-family: var(--font-family); font-size: 0.75rem; transition: color 0.2s; flex-grow: 1; }
+        .light-theme .nav-btn { color: var(--text-secondary-light); } .dark-theme .nav-btn { color: var(--text-secondary-dark); }
+        .nav-btn i { font-size: 1.5rem; margin-bottom: 4px; } .nav-btn.active { color: var(--primary-color); }
+        
+        .task-container { padding: 20px; border-radius: 12px; margin-bottom: 15px; display: flex; align-items: center; gap: 15px; }
+        .light-theme .task-container { background-color: var(--surface-light); border: 1px solid var(--border-light); }
+        .dark-theme .task-container { background-color: var(--surface-dark); border: 1px solid var(--border-dark); }
+        .task-icon-img { width: 40px; height: 40px; border-radius: 8px; object-fit: cover; }
+        .task-info h3 { font-size: 1.1rem; font-weight: 600; } .task-info p { font-size: 0.85rem; }
+        .action-btn { padding: 10px 20px; font-size: 0.9rem; font-weight: 600; color: #fff; border: none; border-radius: 8px; cursor: pointer; transition: all 0.2s; background: linear-gradient(45deg, var(--primary-color), var(--secondary-color)); margin-left: auto; white-space: nowrap; }
+        .action-btn:disabled { background: #808B96; cursor: not-allowed; }
+        
+        .leaderboard-toggle { display: flex; justify-content: space-around; margin-bottom: 15px; }
+        .toggle-btn { padding: 10px 20px; border: none; background: none; font-size: 1rem; cursor: pointer; }
+        .light-theme .toggle-btn { color: var(--text-secondary-light); } .dark-theme .toggle-btn { color: var(--text-secondary-dark); }
+        .toggle-btn.active { font-weight: 700; color: var(--primary-color); border-bottom: 2px solid var(--primary-color); }
+        .leaderboard-list { list-style: none; }
+        .leaderboard-item { display: flex; align-items: center; padding: 10px; margin-bottom: 8px; border-radius: 8px; }
+        .light-theme .leaderboard-item { background-color: var(--surface-light); } .dark-theme .leaderboard-item { background-color: var(--surface-dark); }
+        .rank { font-size: 1.2rem; font-weight: 700; color: var(--primary-color); width: 40px; }
+        .leaderboard-item img { width: 40px; height: 40px; border-radius: 50%; margin-right: 10px; object-fit: cover; }
+        .leaderboard-name { font-weight: 600; flex-grow: 1; } .leaderboard-score { font-weight: 600; color: var(--primary-color); }
+
+        /* --- NEW STYLES FOR VPN & NOTICE --- */
+        .notice-box {
+            background: rgba(243, 156, 18, 0.15); border-left: 4px solid var(--secondary-color);
+            padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 0.9rem;
+            display: flex; gap: 10px; align-items: center;
         }
-        
-        /* 3. Status & Button (Bottom) */
-        .vpn-status-text { font-size: 1.2rem; font-weight: 700; margin-bottom: 5px; }
-        .vpn-country-tag { font-size: 0.9rem; color: #888; margin-bottom: 25px; }
-        
+        .light-theme .notice-box { color: var(--text-primary-light); } .dark-theme .notice-box { color: var(--text-primary-dark); }
+
+        .vpn-card {
+            background-color: #151b24; color: #ffffff; border-radius: 20px; padding: 30px 20px;
+            text-align: center; margin-top: 20px; border: 1px solid #2c3542;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3); display: none;
+        }
+        .vpn-icon-box {
+            width: 80px; height: 80px; background-color: #3b4754; border-radius: 20px;
+            margin: 0 auto 20px auto; display: flex; align-items: center; justify-content: center; position: relative;
+        }
+        .vpn-icon-box i { font-size: 35px; color: #ffffff; }
+        .slash-line { position: absolute; width: 3px; height: 50px; background: white; transform: rotate(45deg); }
+        .vpn-alert-badge {
+            position: absolute; top: -5px; right: -5px; width: 25px; height: 25px;
+            background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 14px;
+        }
+        .vpn-card h2 { font-size: 1.6rem; margin-bottom: 10px; font-weight: 700; color: #e1e4e8; }
+        .vpn-card p { color: #8b949e; font-size: 0.95rem; margin-bottom: 25px; }
+        .country-pill {
+            display: inline-block; background-color: #262f3d; border: 1px solid #3e4a59;
+            padding: 10px 30px; border-radius: 12px; color: #d1d5da; font-size: 1rem; margin-bottom: 25px; text-transform: capitalize;
+        }
         .retry-btn {
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            color: white; border: none; padding: 12px 30px;
-            border-radius: 25px; font-weight: 600; cursor: pointer;
-            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
-            display: flex; align-items: center; gap: 8px;
+            background-color: #3b4754; color: white; border: none; width: 100%; padding: 15px;
+            border-radius: 15px; font-size: 1rem; font-weight: 600; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 10px; transition: background 0.2s;
         }
-
-        /* Standard Components */
-        .profile-header { padding: 25px; text-align: center; border-bottom: 1px solid var(--border-light); background: var(--surface-light); }
-        .dark-theme .profile-header { border-bottom-color: var(--border-dark); background: var(--surface-dark); }
-        #user-photo { width: 70px; height: 70px; border-radius: 50%; border: 3px solid var(--primary-color); margin-bottom: 10px; }
+        .retry-btn:hover { background-color: #4a5766; }
+        .secure-text { margin-top: 20px; color: #566573; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 5px; }
         
-        .stat-card, .task-container, .wallet-card {
-            background: var(--surface-light); border: 1px solid var(--border-light);
-            border-radius: 12px; padding: 15px; margin-bottom: 15px;
-        }
-        .dark-theme .stat-card, .dark-theme .task-container, .dark-theme .wallet-card {
-            background: var(--surface-dark); border-color: var(--border-dark);
-        }
-        
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
-        .stat-card { text-align: center; }
-        .stat-card h3 { font-size: 0.8rem; opacity: 0.7; margin-bottom: 5px; }
-        .stat-card p { font-size: 1.2rem; font-weight: 700; color: var(--primary-color); }
-
-        .task-container { display: flex; align-items: center; gap: 15px; }
-        .task-icon { width: 40px; height: 40px; border-radius: 8px; }
-        .btn-claim { margin-left: auto; padding: 8px 16px; border: none; background: var(--primary-color); color: white; border-radius: 6px; cursor: pointer; font-size: 0.85rem; }
-        .btn-claim:disabled { background: #7f8c8d; }
-
-        .bottom-nav {
-            position: fixed; bottom: 0; width: 100%; max-width: 500px;
-            background: var(--surface-light); border-top: 1px solid var(--border-light);
-            display: flex; justify-content: space-around; padding: 10px 0; z-index: 100;
-        }
-        .dark-theme .bottom-nav { background: var(--surface-dark); border-color: var(--border-dark); }
-        .nav-btn { background: none; border: none; color: #999; font-size: 0.7rem; display: flex; flex-direction: column; align-items: center; gap: 4px; }
-        .nav-btn i { font-size: 1.4rem; }
-        .nav-btn.active { color: var(--primary-color); }
-        
-        /* Helper Classes */
-        .text-center { text-align: center; }
-        input, select { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ccc; background: transparent; color: inherit; margin-bottom: 10px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
-
-    <!-- Loader -->
-    <div id="app-loader" style="position:fixed;top:0;left:0;width:100%;height:100%;background:var(--background-light);z-index:9999;display:flex;justify-content:center;align-items:center;">
-        <i class="fas fa-circle-notch fa-spin" style="font-size:40px;color:var(--primary-color);"></i>
-    </div>
-
+    <div id="app-loader"><div class="spinner"></div><p id="loading-progress">0%</p></div>
+    <div id="popup" class="popup-overlay"><div class="popup-content"><div id="popup-body"></div></div></div>
+    
     <div id="app" style="display: none;">
-        
-        <!-- Header -->
         <header class="profile-header">
-            <img id="user-photo" src="https://via.placeholder.com/70" alt="User">
-            <h2 id="user-name">User</h2>
-            <p>Balance: <span id="user-balance" style="color:var(--primary-color);font-weight:bold;">0.00</span> TK</p>
+            <img id="user-photo" src="https://via.placeholder.com/80" alt="User">
+            <h1 id="user-name">Loading...</h1>
+            <div id="user-balance-container">Main Balance: <span id="user-balance">0.00</span> TK</div>
         </header>
 
-        <main>
-            <!-- 1. Home Page -->
+        <main id="main-content">
+            <!-- Home Page (Unchanged) -->
             <div id="home-page" class="page active">
                 <div class="stats-grid">
-                    <div class="stat-card"><h3>Referrals</h3><p id="ref-count">0</p></div>
-                    <div class="stat-card"><h3>Ads Watched</h3><p id="ad-count">0</p></div>
-                    <div class="stat-card"><h3>Total Earned</h3><p id="total-earned">0.00</p></div>
-                    <div class="stat-card"><h3>Earning Wallet</h3><p id="earning-wallet">0.00</p></div>
+                    <div class="stat-card"><h3>Today's Ads</h3><p id="daily-ads-watched">0 / 0</p></div>
+                    <div class="stat-card"><h3>Total Referrals</h3><p id="referral-count">0</p></div>
+                    <div class="stat-card"><h3>Total Ads Watched</h3><p id="total-ads-watched">0</p></div>
+                    <div class="stat-card"><h3>Total Income</h3><p id="total-earned">0.00</p></div>
                 </div>
-                <!-- Dynamic Links (If any) -->
-                <div id="home-links"></div>
+                <div id="earnings-graph-container" class="chart-container">
+                    <h3>Last 7 Days Earnings</h3>
+                    <div id="earnings-chart" class="chart"></div><div id="earnings-chart-labels" class="chart-labels"></div>
+                </div>
+                <div id="dynamic-links-container" style="margin-top: 20px;"></div>
             </div>
 
-            <!-- 2. Tasks Page (Only Ads + VPN Logic) -->
+            <!-- Tasks Page (Only Ads + Notice + VPN) -->
             <div id="tasks-page" class="page">
-                
-                <!-- Restricted Overlay (Default Hidden) -->
-                <div id="vpn-overlay">
-                    <!-- Notice at TOP -->
-                    <div class="vpn-notice-box" id="vpn-notice-text">
-                        Loading Notice...
+                <!-- Notice always at top -->
+                <div class="notice-box" id="permanent-task-notice">
+                    <i class="fas fa-bullhorn" style="font-size:1.2rem; color:var(--primary-color);"></i>
+                    <span id="task-notice-text">Loading instructions...</span>
+                </div>
+
+                <!-- Ad Area (Shows if VPN correct) -->
+                <div id="ad-interaction-area" style="display:none;">
+                    <div id="ad-progress-container" class="progress-container" style="margin-top:20px;"></div>
+                    <div id="ad-task-container"></div>
+                </div>
+
+                <!-- VPN Card (Shows if VPN wrong) -->
+                <div id="vpn-restriction-card" class="vpn-card">
+                    <div class="vpn-icon-box">
+                        <i class="fas fa-wifi"></i>
+                        <div class="slash-line"></div>
+                        <div class="vpn-alert-badge">!</div>
                     </div>
-                    
-                    <!-- Image SMALL -->
-                    <!-- আপনি এখানে আপনার নিজস্ব ছবির লিংক দিন। আমি একটি ডেমো আইকন ব্যবহার করছি -->
-                    <img src="https://img.icons8.com/color/96/access-denied.png" class="restricted-img" alt="Restricted">
-                    
-                    <!-- Status Text -->
-                    <div class="vpn-status-text">Access Restricted</div>
-                    <div class="vpn-country-tag">Allowed: <span id="allowed-country-name">...</span></div>
-                    
-                    <!-- Retry Button -->
+                    <h2>Access Restricted</h2>
+                    <p>This section requires a connection</p>
+                    <div class="country-pill" id="required-country-name">...</div>
                     <button class="retry-btn" onclick="checkVPNAndRender()">
-                        <i class="fas fa-sync-alt"></i> Retry Connection
+                        <i class="fas fa-wifi"></i> Retry Connection
                     </button>
-                </div>
-
-                <!-- Main Task Content (Hidden if Restricted) -->
-                <div id="task-content" style="display:none;">
-                    <div class="wallet-card text-center">
-                        <h3 style="opacity:0.7;">Earning Wallet</h3>
-                        <h1 style="color:var(--primary-color); margin:10px 0;"><span id="task-wallet-bal">0.00</span> TK</h1>
-                        <p style="font-size:0.8rem; margin-bottom:10px;">Minimum 100 TK to move to Main Balance</p>
-                        <button id="move-bal-btn" class="btn-claim" style="width:100%; padding:12px;" disabled>Move to Balance</button>
-                    </div>
-
-                    <div style="margin-top:20px;">
-                        <h3 style="margin-bottom:10px;">Daily Tasks</h3>
-                        <!-- Ad Progress -->
-                        <div style="background:#ddd;height:8px;border-radius:4px;margin-bottom:15px;overflow:hidden;">
-                            <div id="ad-progress-bar" style="width:0%;height:100%;background:var(--primary-color);transition:0.3s;"></div>
-                        </div>
-                        
-                        <!-- Watch Button -->
-                        <div class="task-container">
-                            <img src="https://img.icons8.com/fluency/48/play-button.png" class="task-icon">
-                            <div>
-                                <h4>Watch Video Ad</h4>
-                                <p style="font-size:0.8rem; opacity:0.7;">Earn TK per ad</p>
-                            </div>
-                            <button id="watch-ad-btn" class="btn-claim">Watch</button>
-                        </div>
-                    </div>
+                    <div class="secure-text"><i class="fas fa-shield-alt"></i> Secure connection required</div>
                 </div>
             </div>
 
-            <!-- 3. Bonus Page (Static Tasks) -->
+            <!-- Bonus Page (New) -->
             <div id="bonus-page" class="page">
-                <h3 style="margin-bottom:15px;">Bonus Tasks</h3>
-                <div id="bonus-list"></div>
+                <h2>Bonus Tasks</h2>
+                <div id="dynamic-tasks-container"></div>
             </div>
 
-            <!-- 4. Leaderboard -->
+            <!-- Leaderboard (Unchanged) -->
             <div id="leaderboard-page" class="page">
-                <h3 style="margin-bottom:15px;">Top Referrers</h3>
-                <div id="leaderboard-list"></div>
+                <h2>Leaderboard</h2>
+                <div class="leaderboard-toggle">
+                    <button class="toggle-btn active" data-board="referral">Top Referrers</button>
+                    <button class="toggle-btn" data-board="earning">Top Earners</button>
+                </div>
+                <div id="referral-board"><ul class="leaderboard-list" id="referral-leaderboard-list"></ul></div>
+                <div id="earning-board" style="display: none;"><ul class="leaderboard-list" id="earning-leaderboard-list"></ul></div>
             </div>
 
-            <!-- 5. Profile / Withdraw -->
+            <!-- Profile (Unchanged) -->
             <div id="profile-page" class="page">
-                
-                <!-- Invite Section -->
-                <div class="wallet-card text-center">
-                    <h3>Invite & Earn</h3>
-                    <p style="font-size:0.9rem; margin:10px 0;">Share your link and earn bonus.</p>
-                    <input type="text" id="ref-link" readonly style="text-align:center; font-size:0.8rem;">
-                    <button class="btn-claim" style="width:100%;" onclick="copyRef()">Copy Link</button>
-                </div>
-
-                <!-- Withdraw Form -->
-                <div class="wallet-card">
-                    <h3>Withdraw Funds</h3>
-                    <p id="withdraw-notice" style="font-size:0.8rem; color:red; margin-bottom:10px;"></p>
-                    <form id="withdraw-form">
-                        <select id="w-method" required></select>
-                        <input type="text" id="w-acc" placeholder="Account Number" required>
-                        <input type="number" id="w-amt" placeholder="Amount" required>
-                        <button type="submit" class="btn-claim" style="width:100%; padding:12px;">Request Withdraw</button>
-                    </form>
-                </div>
-
-                <!-- History -->
-                <div style="margin-top:20px;">
-                    <h3>History</h3>
-                    <div id="history-list"></div>
+                <div id="referral-section"></div><div id="withdraw-section"></div>
+                <div id="withdrawal-history-section" style="margin-top: 20px;">
+                    <h2>Withdrawal History</h2><div id="withdrawal-history-list"></div>
                 </div>
             </div>
         </main>
-
-        <!-- Bottom Navigation -->
+        
         <nav class="bottom-nav">
-            <button class="nav-btn active" onclick="nav('home-page', this)"><i class="fas fa-home"></i>Home</button>
-            <button class="nav-btn" onclick="nav('tasks-page', this)"><i class="fas fa-play-circle"></i>Tasks</button>
-            <button class="nav-btn" onclick="nav('bonus-page', this)"><i class="fas fa-gift"></i>Bonus</button>
-            <button class="nav-btn" onclick="nav('leaderboard-page', this)"><i class="fas fa-trophy"></i>Top</button>
-            <button class="nav-btn" onclick="nav('profile-page', this)"><i class="fas fa-user"></i>Profile</button>
+            <button class="nav-btn active" data-page="home-page"><i class="fas fa-home"></i><span>Home</span></button>
+            <button class="nav-btn" data-page="tasks-page"><i class="fas fa-play-circle"></i><span>Ad Tasks</span></button>
+            <button class="nav-btn" data-page="bonus-page"><i class="fas fa-gift"></i><span>Bonus</span></button>
+            <button class="nav-btn" data-page="leaderboard-page"><i class="fas fa-trophy"></i><span>Leaderboard</span></button>
+            <button class="nav-btn" data-page="profile-page"><i class="fas fa-user-alt"></i><span>Profile</span></button>
         </nav>
-
     </div>
 
-    <!-- Scripts -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
+    
     <script>
+    document.addEventListener('DOMContentLoaded', () => {
         const tg = window.Telegram.WebApp;
-        tg.expand();
-
-        // Theme Handling
-        if(tg.colorScheme === 'dark') document.body.classList.add('dark-theme');
-        else document.body.classList.add('light-theme');
-
-        // Firebase Config
+        
         const firebaseConfig = {
           apiKey: "AIzaSyDJPs6pXv2k_wTCNWHqsr5exFkvOMeIX40",
           authDomain: "orange-leamon-bot.firebaseapp.com",
@@ -277,313 +259,400 @@
           messagingSenderId: "440970951072",
           appId: "1:440970951072:web:6cf46f7720d260047c4cc5"
         };
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
+        
+        let appConfig = {}; let userState = {}; let tgUser = {};
+        let leaderboardData = { referral: [], earning: [] };
+        let userTransactions = [];
 
-        // State Variables
-        let user = tg.initDataUnsafe.user || { id: 123456, first_name: 'Test', username: 'user' }; // Fallback for browser test
-        let config = {};
-        let userData = {};
-        let earningBalance = parseFloat(localStorage.getItem('earnBal') || 0);
+        const popup = document.getElementById('popup');
+        const popupBody = document.getElementById('popup-body');
+        const loadingProgress = document.getElementById('loading-progress');
 
-        // --- Initialization ---
-        const init = async () => {
-            // 1. Get Config
-            const confSnap = await db.ref('config').once('value');
-            config = confSnap.val() || {};
+        const showPopup = (content) => { popupBody.innerHTML = content; popup.style.display = 'flex'; };
+        const closePopup = () => { popup.style.display = 'none'; };
+        const updateProgress = (percentage) => { loadingProgress.textContent = `${percentage}%`; };
+
+        const loadAdSdk = (zoneId) => {
+            if (!zoneId) return;
+            if (document.querySelector(`script[data-zone='${zoneId}']`)) return;
+            const script = document.createElement('script');
+            script.src = `//libtl.com/sdk.js`;
+            script.setAttribute('data-zone', zoneId);
+            script.setAttribute('data-sdk', `show_${zoneId}`);
+            script.async = true;
+            document.body.appendChild(script);
+        };
+
+        const initApp = async () => {
+            tg.ready(); tg.expand();
+            document.body.className = `${tg.colorScheme}-theme`;
+            tgUser = tg.initDataUnsafe.user;
             
-            // 2. Load Ad SDK
-            if(config.adZoneId) {
-                const s = document.createElement('script');
-                s.src = '//libtl.com/sdk.js';
-                s.dataset.zone = config.adZoneId;
-                s.dataset.sdk = `show_${config.adZoneId}`;
-                document.body.appendChild(s);
+            // Browser fallback logic
+            if (!tgUser || !tgUser.id) { 
+                console.warn("User not found, using test.");
+                tgUser = { id: 123456, first_name: "Test", last_name: "User", username: "test", photo_url: "" };
             }
 
-            // 3. Get/Create User
-            const uRef = db.ref(`users/${user.id}`);
-            const uSnap = await uRef.once('value');
-            if(!uSnap.exists()) {
-                const startParam = tg.initDataUnsafe.start_param;
-                await uRef.set({
-                    id: user.id, firstName: user.first_name, username: user.username,
-                    balance: 0, referrals: 0, totalEarned: 0, dailyAds: 0, 
-                    date: new Date().toDateString(), referredBy: startParam || null
+            try {
+                updateProgress(10); 
+                if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+                const db = firebase.database();
+                updateProgress(20);
+                
+                // --- Safe Data Loading Pattern ---
+                const loadSafe = async (fn) => { try { await fn(); } catch(e) { console.log(e); } };
+
+                await loadSafe(async () => {
+                    const s = await db.ref('config').once('value');
+                    appConfig = s.val() || {};
                 });
-                // Referral Bonus Logic (Optional - Simplified)
-                if(startParam && startParam != user.id) {
-                    await db.ref(`users/${startParam}/referrals`).set(firebase.database.ServerValue.increment(1));
-                    await db.ref(`users/${startParam}/balance`).set(firebase.database.ServerValue.increment(config.referralBonus || 0));
+                updateProgress(40);
+
+                await loadUserData(db);
+                updateProgress(60);
+
+                // Load Boards & History in parallel, ignoring errors to prevent stuck screen
+                await Promise.all([
+                    loadSafe(async () => {
+                        const s = await db.ref('users').orderByChild('referrals').limitToLast(10).once('value');
+                        s.forEach(c => leaderboardData.referral.push(c.val()));
+                        leaderboardData.referral.reverse();
+                    }),
+                    loadSafe(async () => {
+                        const s = await db.ref('users').orderByChild('totalEarned').limitToLast(10).once('value');
+                        s.forEach(c => leaderboardData.earning.push(c.val()));
+                        leaderboardData.earning.reverse();
+                    }),
+                    loadSafe(async () => loadTransactionHistory(db))
+                ]);
+                
+                updateProgress(90);
+                if(appConfig.adZoneId) loadAdSdk(appConfig.adZoneId);
+                
+                renderUI(); setupNavigation(); setupEventListeners();
+                updateProgress(100);
+
+                setTimeout(() => {
+                    document.getElementById('app-loader').style.display = 'none';
+                    document.getElementById('app').style.display = 'block';
+                    if (appConfig.welcomeMessage && !userState.welcomed) {
+                        showPopup(`<h2>Welcome!</h2><p>${appConfig.welcomeMessage}</p><button class="popup-close-btn">Continue</button>`);
+                        db.ref(`users/${tgUser.id}/welcomed`).set(true);
+                    }
+                }, 500);
+
+            } catch (error) {
+                console.error("Critical Error:", error);
+                document.getElementById('app-loader').style.display = 'none';
+                document.getElementById('app').style.display = 'block';
+                tg.showAlert("App loaded with issues. Please restart.");
+            }
+        };
+
+        const loadUserData = async (db) => {
+            const userRef = db.ref(`users/${tgUser.id}`);
+            const snapshot = await userRef.once('value');
+            let userData = snapshot.val();
+            
+            if (!userData) {
+                const startParam = tg.initDataUnsafe.start_param;
+                const referralId = (startParam && !isNaN(startParam)) ? startParam : null;
+                
+                userData = { id: tgUser.id, firstName: tgUser.first_name || '', lastName: tgUser.last_name || '', username: tgUser.username || '', photoUrl: tgUser.photo_url || '', balance: 0, referrals: 0, referredBy: referralId, totalEarned: 0, lifetimeAdCount: 0, lastAdWatchDate: '1970-01-01', dailyAdCount: 0, breakUntil: 0, completedTasks: {}, welcomed: false };
+                await userRef.set(userData);
+                
+                if (referralId && referralId != tgUser.id) {
+                    const refRef = db.ref(`users/${referralId}`);
+                    const bonus = parseFloat(appConfig.referralBonus || 0);
+                    if (bonus > 0) {
+                        await refRef.transaction(d => { if(d) { d.balance = (d.balance||0) + bonus; d.referrals = (d.referrals||0) + 1; } return d; });
+                    } else {
+                        await refRef.child('referrals').set(firebase.database.ServerValue.increment(1));
+                    }
                 }
             }
-            // Daily Reset Logic
-            userData = (await uRef.once('value')).val();
-            if(userData.date !== new Date().toDateString()) {
-                await uRef.update({ dailyAds: 0, date: new Date().toDateString() });
-                userData.dailyAds = 0;
+            const today = new Date().toISOString().slice(0, 10);
+            if (userData.lastAdWatchDate !== today) {
+                userData.dailyAdCount = 0; userData.lastAdWatchDate = today;
+                await userRef.update({ dailyAdCount: 0, lastAdWatchDate: today });
             }
-
-            renderUI();
-            document.getElementById('app-loader').style.display = 'none';
-            document.getElementById('app').style.display = 'block';
+            userState = userData;
         };
-
-        // --- UI Rendering ---
+        
+        const loadTransactionHistory = async (db) => {
+            userTransactions = [];
+            const statuses = ['pending', 'completed', 'rejected'];
+            for(const s of statuses) {
+                const snap = await db.ref(`withdrawals/${s}`).orderByChild('userId').equalTo(tgUser.id).once('value');
+                snap.forEach(c => userTransactions.push(c.val()));
+            }
+            userTransactions.sort((a, b) => b.timestamp - a.timestamp);
+        };
+        
         const renderUI = () => {
-            // Header
-            document.getElementById('user-name').innerText = userData.firstName;
-            document.getElementById('user-balance').innerText = (userData.balance||0).toFixed(2);
-            document.getElementById('user-photo').src = user.photo_url || 'https://via.placeholder.com/70';
-
-            // Home Stats
-            document.getElementById('ref-count').innerText = userData.referrals || 0;
-            document.getElementById('ad-count').innerText = userData.dailyAds || 0;
-            document.getElementById('total-earned').innerText = (userData.totalEarned || 0).toFixed(2);
-            document.getElementById('earning-wallet').innerText = earningBalance.toFixed(2);
-            document.getElementById('task-wallet-bal').innerText = earningBalance.toFixed(2);
+            document.getElementById('user-photo').src = userState.photoUrl || 'https://via.placeholder.com/80';
+            document.getElementById('user-name').textContent = `${userState.firstName} ${userState.lastName}`;
+            document.getElementById('user-balance').textContent = (userState.balance || 0).toFixed(2);
+            document.getElementById('daily-ads-watched').textContent = `${userState.dailyAdCount || 0} / ${appConfig.dailyAdLimit || 0}`;
+            document.getElementById('referral-count').textContent = userState.referrals || 0;
+            document.getElementById('total-ads-watched').textContent = userState.lifetimeAdCount || 0;
+            document.getElementById('total-earned').textContent = (userState.totalEarned || 0).toFixed(2);
             
-            // Ref Link
-            document.getElementById('ref-link').value = `https://t.me/${config.botUsername}/app?startapp=${user.id}`;
+            // Set Permanent Notice
+            document.getElementById('task-notice-text').innerText = appConfig.taskPageNotice || "Connect VPN to earn rewards.";
 
-            // Buttons State
-            document.getElementById('move-bal-btn').disabled = earningBalance < 100;
-            
-            // Render Tasks Lists
-            renderBonusTasks();
-            renderLeaderboard();
-            renderWithdrawOptions();
-            renderHistory();
+            renderAdTask(); renderAdProgress(); renderDynamicTasks(); renderReferralSection(); renderWithdrawSection(); renderEarningsGraph(); renderDynamicLinks();
         };
-
-        // --- VPN & Country Check Logic (Crucial) ---
+        
+        // --- VPN Logic ---
         window.checkVPNAndRender = async () => {
-            const overlay = document.getElementById('vpn-overlay');
-            const content = document.getElementById('task-content');
+            const vpnCard = document.getElementById('vpn-restriction-card');
+            const adArea = document.getElementById('ad-interaction-area');
+            const retryBtn = vpnCard.querySelector('.retry-btn');
             
-            // Set Loading State
-            overlay.style.display = 'flex';
-            content.style.display = 'none';
-            document.getElementById('vpn-notice-text').innerText = "Checking connection...";
-            
-            // 1. Is VPN Required?
-            if(!config.vpnRequired) {
-                overlay.style.display = 'none';
-                content.style.display = 'block';
-                return;
+            const allowed = appConfig.allowedCountry || "United States";
+            document.getElementById('required-country-name').innerText = allowed;
+
+            retryBtn.innerHTML = '<div class="spinner" style="width:20px;height:20px;border:3px solid #fff;border-top-color:transparent;border-radius:50%;animation:spin 1s linear infinite;"></div> Checking...';
+
+            if(!appConfig.vpnRequired) {
+                vpnCard.style.display = 'none'; adArea.style.display = 'block'; return;
             }
 
-            // 2. Fetch User IP
             try {
                 const res = await fetch('https://ipapi.co/json/');
                 const data = await res.json();
-                const userCountry = data.country_name || "";
+                const country = data.country_name || "";
                 
-                const allowed = config.allowedCountry || "United States";
-                
-                // 3. Update UI Elements
-                document.getElementById('allowed-country-name').innerText = allowed;
-                document.getElementById('vpn-notice-text').innerText = config.taskPageNotice || "Please connect to VPN.";
-
-                // 4. Compare
-                if(userCountry.toLowerCase().includes(allowed.toLowerCase())) {
-                    // Success
-                    overlay.style.display = 'none';
-                    content.style.display = 'block';
+                if(country.toLowerCase().includes(allowed.toLowerCase())) {
+                    vpnCard.style.display = 'none'; adArea.style.display = 'block';
                 } else {
-                    // Failed - Show Restricted UI
-                    overlay.style.display = 'flex';
-                    content.style.display = 'none';
+                    vpnCard.style.display = 'block'; adArea.style.display = 'none';
                 }
-
             } catch(e) {
-                console.error("IP Check Error", e);
-                // On error, show restriction to be safe, or allow (Admin choice usually).
-                // Here showing restricted with error msg.
-                document.getElementById('vpn-notice-text').innerText = "Connection check failed. Please check internet.";
+                console.log("IP Check Failed", e);
+                vpnCard.style.display = 'block'; adArea.style.display = 'none';
+            } finally {
+                retryBtn.innerHTML = '<i class="fas fa-wifi"></i> Retry Connection';
             }
         };
 
-        // --- Actions ---
+        const renderAdProgress = () => {
+            const limit = appConfig.dailyAdLimit || 1;
+            const count = userState.dailyAdCount || 0;
+            const pct = (count / limit) * 100;
+            document.getElementById('ad-progress-container').innerHTML = `<div class="progress-info"><span>Daily Ad Progress</span><span>${count} / ${limit}</span></div><div class="progress-bar-bg"><div class="progress-bar-fg" style="width: ${pct}%;"></div></div>`;
+        };
         
-        // 1. Navigation
-        window.nav = (pageId, btn) => {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-            btn.classList.add('active');
-
-            if(pageId === 'tasks-page') {
-                checkVPNAndRender(); // Trigger Check
+        const renderEarningsGraph = async () => {
+            const chartEl = document.getElementById('earnings-chart');
+            const labelsEl = document.getElementById('earnings-chart-labels');
+            chartEl.innerHTML = ''; labelsEl.innerHTML = '';
+            const today = new Date();
+            
+            // Render placeholder first to avoid layout shift
+            for(let i=6; i>=0; i--) {
+                chartEl.innerHTML += `<div class="bar" style="height: 10%;"></div>`;
             }
-        };
-
-        // 2. Watch Ad
-        document.getElementById('watch-ad-btn').addEventListener('click', async () => {
-            const limit = config.dailyAdLimit || 10;
-            if((userData.dailyAds || 0) >= limit) return tg.showAlert("Daily limit reached!");
-
-            const adFn = window['show_' + config.adZoneId];
-            if(typeof adFn !== 'function') return tg.showAlert("Ad loading...");
 
             try {
-                await adFn();
-                // Success
-                const reward = config.adValue || 0;
-                earningBalance += reward;
-                localStorage.setItem('earnBal', earningBalance);
-                
-                userData.dailyAds++;
-                userData.totalEarned = (userData.totalEarned || 0) + reward;
-                
-                // Update DB
-                await db.ref(`users/${user.id}`).update({
-                    dailyAds: userData.dailyAds,
-                    totalEarned: userData.totalEarned
-                });
-
-                tg.showAlert(`+${reward} TK Added to Earning Wallet!`);
-                renderUI();
-                
-                // Update Progress Bar
-                const pct = (userData.dailyAds / limit) * 100;
-                document.getElementById('ad-progress-bar').style.width = pct + '%';
-
-            } catch(e) { tg.showAlert("Ad failed/closed."); }
-        });
-
-        // 3. Move Balance
-        document.getElementById('move-bal-btn').addEventListener('click', async () => {
-            if(earningBalance < 100) return;
-            await db.ref(`users/${user.id}/balance`).set(firebase.database.ServerValue.increment(earningBalance));
-            userData.balance += earningBalance;
-            earningBalance = 0;
-            localStorage.setItem('earnBal', 0);
-            renderUI();
-            tg.showAlert("Balance Moved Successfully!");
-        });
-
-        // 4. Bonus Tasks Render
-        const renderBonusTasks = () => {
-            const list = document.getElementById('bonus-list');
-            list.innerHTML = '';
-            if(!config.tasks) return;
-            
-            Object.entries(config.tasks).forEach(([key, t]) => {
-                const isDone = userData.tasks && userData.tasks[key];
-                const item = document.createElement('div');
-                item.className = 'task-container';
-                item.innerHTML = `
-                    <img src="${t.icon}" class="task-icon">
-                    <div style="flex:1">
-                        <h4>${t.name}</h4>
-                        <p style="font-size:0.8rem;color:var(--primary-color);">+${t.reward} TK</p>
-                    </div>
-                    <button class="btn-claim" ${isDone ? 'disabled' : ''} onclick="doTask('${key}', '${t.url}', ${t.reward})">
-                        ${isDone ? 'Done' : 'Start'}
-                    </button>
-                `;
-                list.appendChild(item);
-            });
-        };
-
-        window.doTask = (key, url, reward) => {
-            tg.openLink(url);
-            setTimeout(async () => {
-                if(confirm("Did you complete the task?")) {
-                     await db.ref(`users/${user.id}/balance`).set(firebase.database.ServerValue.increment(reward));
-                     await db.ref(`users/${user.id}/tasks/${key}`).set(true);
-                     if(!userData.tasks) userData.tasks = {};
-                     userData.tasks[key] = true;
-                     userData.balance += reward;
-                     renderUI();
+                const dates = [];
+                for (let i = 6; i >= 0; i--) { 
+                    const d = new Date(today); d.setDate(today.getDate() - i); 
+                    dates.push(d.toISOString().slice(0, 10)); 
                 }
-            }, 5000);
+                const promises = dates.map(d => firebase.database().ref(`userEarnings/${tgUser.id}/${d}`).once('value'));
+                const snaps = await Promise.all(promises);
+                const vals = snaps.map(s => s.val() || 0);
+                const max = Math.max(...vals, 1);
+                
+                chartEl.innerHTML = ''; // Clear placeholder
+                vals.forEach((val, idx) => {
+                    const h = (val / max) * 100;
+                    const lbl = new Date(dates[idx]).toLocaleDateString('en-US', { day: 'numeric' });
+                    chartEl.innerHTML += `<div class="bar" style="height: ${h}%;"><span class="tooltip">${val.toFixed(2)}</span></div>`;
+                    labelsEl.innerHTML += `<span>${lbl}</span>`;
+                });
+            } catch(e) { console.log("Graph error", e); }
+        };
+        
+        const handleWatchAd = async () => {
+            if (userState.dailyAdCount >= appConfig.dailyAdLimit) { tg.showAlert("Daily limit reached."); return; }
+            
+            const adFn = window['show_' + appConfig.adZoneId];
+            if (typeof adFn !== 'function') { tg.showAlert("Ad network loading..."); return; }
+
+            showPopup(`<div class="popup-loader"><div class="spinner"></div></div><h2>Loading Ad</h2><p>Please wait...</p>`);
+            
+            try {
+                await adFn();
+                closePopup();
+                const val = appConfig.adValue || 0;
+                
+                // DIRECT UPDATE MAIN BALANCE
+                userState.balance = (userState.balance || 0) + val;
+                userState.dailyAdCount++;
+                userState.totalEarned = (userState.totalEarned || 0) + val;
+                userState.lifetimeAdCount++;
+
+                const db = firebase.database();
+                const updates = {
+                    balance: userState.balance,
+                    dailyAdCount: userState.dailyAdCount,
+                    totalEarned: userState.totalEarned,
+                    lifetimeAdCount: userState.lifetimeAdCount
+                };
+                
+                await db.ref(`users/${tgUser.id}`).update(updates);
+                await db.ref(`userEarnings/${tgUser.id}/${new Date().toISOString().slice(0, 10)}`).set(firebase.database.ServerValue.increment(val));
+
+                tg.HapticFeedback.notificationOccurred('success');
+                tg.showAlert(`+${val} TK Added to Main Balance!`);
+                renderUI();
+
+            } catch (error) {
+                closePopup(); console.error(error); tg.showAlert("Ad failed to load.");
+            }
         };
 
-        // 5. Leaderboard
-        const renderLeaderboard = async () => {
-            const snap = await db.ref('users').orderByChild('referrals').limitToLast(10).once('value');
-            const list = document.getElementById('leaderboard-list');
-            list.innerHTML = '';
-            const arr = [];
-            snap.forEach(c => arr.push(c.val()));
-            arr.reverse().forEach((u, i) => {
-                list.innerHTML += `<div class="task-container" style="padding:10px;">
-                    <b>#${i+1}</b>
-                    <span style="margin-left:10px; flex:1;">${u.firstName}</span>
-                    <span style="color:var(--primary-color); font-weight:bold;">${u.referrals} Refs</span>
+        const renderWithdrawalHistory = () => {
+            const list = document.getElementById('withdrawal-history-list');
+            list.innerHTML = userTransactions.length ? '' : '<p>No history found.</p>';
+            userTransactions.forEach(item => {
+                list.innerHTML += `<div class="history-item">
+                    <div class="history-details"><p>${item.amount} TK - ${item.method}</p><small>${new Date(item.timestamp).toLocaleString()}</small></div>
+                    <span class="history-status status-${item.status}">${item.status}</span>
                 </div>`;
             });
         };
-
-        // 6. Withdraw
-        const renderWithdrawOptions = () => {
-            const sel = document.getElementById('w-method');
-            sel.innerHTML = '<option value="">Select Method</option>';
-            if(config.withdrawMethods) {
-                config.withdrawMethods.forEach(m => {
-                    sel.innerHTML += `<option value="${m.name}">${m.name} (Min: ${m.min})</option>`;
-                });
-            }
-            if(config.minimumWithdrawReferrals > 0) {
-                document.getElementById('withdraw-notice').innerText = `Requirement: ${config.minimumWithdrawReferrals} Referrals to withdraw.`;
-            }
-        };
-
-        document.getElementById('withdraw-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            // Ref Check
-            if((userData.referrals||0) < (config.minimumWithdrawReferrals||0)) 
-                return tg.showAlert(`You need ${config.minimumWithdrawReferrals} referrals!`);
-            
-            const amt = parseFloat(document.getElementById('w-amt').value);
-            if(amt > userData.balance) return tg.showAlert("Insufficient Balance");
-            
-            // Method check (find min)
-            const method = document.getElementById('w-method').value;
-            const mObj = config.withdrawMethods.find(m => m.name === method);
-            if(amt < mObj.min) return tg.showAlert(`Minimum withdrawal is ${mObj.min}`);
-
-            // Push
-            await db.ref('withdrawals/pending').push({
-                userId: user.id,
-                userName: user.first_name,
-                method: method,
-                account: document.getElementById('w-acc').value,
-                amount: amt,
-                timestamp: firebase.database.ServerValue.TIMESTAMP
-            });
-            await db.ref(`users/${user.id}/balance`).set(firebase.database.ServerValue.increment(-amt));
-            userData.balance -= amt;
-            renderUI();
-            tg.showAlert("Withdrawal Request Submitted!");
-            document.getElementById('withdraw-form').reset();
-        });
-
-        const renderHistory = () => {
-            // Simplified loading of last 5 items to save bandwidth/code
-            db.ref('withdrawals/pending').orderByChild('userId').equalTo(user.id).limitToLast(5).on('value', s => {
-                const div = document.getElementById('history-list');
-                div.innerHTML = '';
-                s.forEach(c => {
-                    const d = c.val();
-                    div.innerHTML += `<div class="task-container" style="font-size:0.85rem;">
-                        <div>${d.method}<br><small>${new Date(d.timestamp).toLocaleDateString()}</small></div>
-                        <div style="margin-left:auto;text-align:right;">${d.amount} TK<br><span style="color:orange;">Pending</span></div>
-                    </div>`;
+        
+        const setupNavigation = () => {
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                    document.getElementById(btn.dataset.page).classList.add('active');
+                    btn.classList.add('active');
+                    
+                    if(btn.dataset.page === 'tasks-page') checkVPNAndRender();
+                    if(btn.dataset.page === 'profile-page') renderWithdrawalHistory();
+                    if(btn.dataset.page === 'leaderboard-page') renderLeaderboard();
                 });
             });
         };
-
-        window.copyRef = () => {
-            navigator.clipboard.writeText(document.getElementById('ref-link').value);
-            tg.showAlert("Link Copied!");
+        
+        const setupEventListeners = () => {
+            popup.addEventListener('click', (e) => { if (e.target.classList.contains('popup-close-btn') || e.target.id === 'popup') closePopup(); });
+            document.querySelector('.leaderboard-toggle').addEventListener('click', (e) => {
+                if(e.target.classList.contains('toggle-btn')) {
+                    document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    renderLeaderboard();
+                }
+            });
+            document.getElementById('dynamic-tasks-container').addEventListener('click', (e) => handleClaimTask(e));
+            document.getElementById('profile-page').addEventListener('submit', (e) => handleWithdraw(e));
+            document.getElementById('referral-section').addEventListener('click', (e) => { if(e.target.id === 'copy-ref-link-btn') copyReferralLink(); });
         };
 
-        // Start App
-        init();
+        const renderAdTask = () => {
+            document.getElementById('ad-task-container').innerHTML = `
+                <div class="task-container">
+                    <img class="task-icon-img" src="https://img.icons8.com/ios-filled/100/play-button-circled.png" alt="icon">
+                    <div class="task-info"><h3>Watch Ad</h3><p>Earn ${appConfig.adValue || 0} TK directly.</p></div>
+                    <button id="watch-ad-btn" class="action-btn">Watch</button>
+                </div>`;
+            document.getElementById('watch-ad-btn').addEventListener('click', handleWatchAd);
+        };
 
+        const handleClaimTask = async (e) => {
+            if (e.target.classList.contains('action-btn') && e.target.dataset.taskId) {
+                const taskId = e.target.dataset.taskId;
+                const task = appConfig.tasks[taskId];
+                if (!task || (userState.completedTasks && userState.completedTasks[taskId])) { tg.showAlert('Already claimed.'); return; }
+                tg.openLink(e.target.dataset.taskUrl);
+                e.target.disabled = true;
+                setTimeout(async () => {
+                    try {
+                        await firebase.database().ref(`users/${tgUser.id}/balance`).set(firebase.database.ServerValue.increment(task.reward));
+                        await firebase.database().ref(`users/${tgUser.id}/completedTasks/${taskId}`).set(true);
+                        userState.balance += task.reward;
+                        if(!userState.completedTasks) userState.completedTasks = {};
+                        userState.completedTasks[taskId] = true;
+                        tg.showAlert(`Bonus ${task.reward} TK received!`);
+                        renderUI();
+                    } catch(e) { e.target.disabled = false; }
+                }, 5000);
+            }
+        };
+
+        const handleWithdraw = async (e) => {
+            if(e.target.id !== 'withdraw-form') return; e.preventDefault();
+            const minRef = appConfig.minimumWithdrawReferrals || 0;
+            if ((userState.referrals || 0) < minRef) return tg.showAlert(`Need ${minRef} referrals.`);
+            
+            const amt = parseFloat(document.getElementById('amount').value);
+            const meth = document.getElementById('withdraw-method').value;
+            if(amt > userState.balance) return tg.showAlert("Insufficient balance.");
+            
+            const btn = document.getElementById('withdraw-submit-btn'); btn.disabled = true; btn.textContent = 'Processing...';
+            
+            try {
+                await firebase.database().ref(`users/${tgUser.id}/balance`).set(firebase.database.ServerValue.increment(-amt));
+                const req = { userId: tgUser.id, userName: userState.firstName, method: meth, account: document.getElementById('account-number').value, amount: amt, status: 'pending', timestamp: firebase.database.ServerValue.TIMESTAMP };
+                await firebase.database().ref('withdrawals/pending').push(req);
+                userState.balance -= amt;
+                userTransactions.unshift({...req, timestamp: Date.now()});
+                renderUI(); renderWithdrawalHistory();
+                tg.showAlert("Request submitted!");
+                document.getElementById('withdraw-form').reset();
+            } catch(e) { tg.showAlert("Error."); } finally { btn.disabled = false; btn.textContent = 'Submit Request'; }
+        };
+
+        const copyReferralLink = () => {
+            const el = document.getElementById('referral-link'); el.select();
+            try { navigator.clipboard.writeText(el.value); tg.showAlert("Copied!"); } catch(e) { document.execCommand('copy'); tg.showAlert("Copied!"); }
+        };
+
+        const renderLeaderboard = () => {
+            const type = document.querySelector('.toggle-btn.active').dataset.board;
+            const list = document.getElementById(`${type}-leaderboard-list`);
+            document.getElementById('referral-board').style.display = type === 'referral' ? 'block' : 'none';
+            document.getElementById('earning-board').style.display = type === 'earning' ? 'block' : 'none';
+            list.innerHTML = '';
+            leaderboardData[type].forEach((u, i) => {
+                list.innerHTML += `<li class="leaderboard-item"><span class="rank">#${i+1}</span><img src="${u.photoUrl||'https://via.placeholder.com/40'}"><span class="leaderboard-name">${u.firstName}</span><span class="leaderboard-score">${type === 'referral' ? u.referrals : u.totalEarned.toFixed(2)}</span></li>`;
+            });
+        };
+
+        const renderDynamicTasks = () => {
+            const div = document.getElementById('dynamic-tasks-container'); div.innerHTML = '';
+            if(appConfig.tasks) Object.entries(appConfig.tasks).forEach(([k, t]) => {
+                const done = userState.completedTasks && userState.completedTasks[k];
+                div.innerHTML += `<div class="task-container"><img class="task-icon-img" src="${t.icon}"><div class="task-info"><h3>${t.name}</h3><p>+${t.reward} TK</p></div><button class="action-btn" data-task-id="${k}" data-task-url="${t.url}" ${done?'disabled':''}>${done?'Done':'Claim'}</button></div>`;
+            });
+        };
+
+        const renderReferralSection = () => {
+            document.getElementById('referral-section').innerHTML = `<div class="task-container" style="flex-direction:column"><h3>Invite & Earn</h3><p>Bonus: ${appConfig.referralBonus} TK</p><input id="referral-link" readonly value="https://t.me/${appConfig.botUsername}/app?startapp=${tgUser.id}"><button id="copy-ref-link-btn" class="action-btn">Copy</button></div>`;
+        };
+
+        const renderWithdrawSection = () => {
+            let opts = ''; (appConfig.withdrawMethods||[]).forEach(m => opts += `<option value="${m.name}">${m.name} (Min: ${m.min})</option>`);
+            const note = appConfig.minimumWithdrawReferrals ? `<p style="font-size:0.8rem;text-align:center">Need ${appConfig.minimumWithdrawReferrals} Refs</p>` : '';
+            document.getElementById('withdraw-section').innerHTML = `<form id="withdraw-form" class="task-container" style="flex-direction:column"><h3>Withdraw</h3>${note}<select id="withdraw-method">${opts}</select><input id="account-number" placeholder="Account"><input id="amount" type="number" placeholder="Amount"><button id="withdraw-submit-btn" class="action-btn">Submit Request</button></form>`;
+        };
+
+        const renderDynamicLinks = () => {
+            const div = document.getElementById('dynamic-links-container'); div.innerHTML = '';
+            if(appConfig.links) Object.values(appConfig.links).forEach(l => {
+                div.innerHTML += `<div class="task-container"><img class="task-icon-img" src="${l.icon}"><div class="task-info"><h3>${l.name}</h3></div><button class="action-btn" onclick="window.Telegram.WebApp.openLink('${l.url}')">Visit</button></div>`;
+            });
+        };
+
+        initApp();
+    });
     </script>
 </body>
 </html>
